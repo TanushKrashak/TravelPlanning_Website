@@ -6,78 +6,192 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>About Us - Travel Buddy</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Resetting default margin/padding */
+        body, h1, h2, h3, p, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header .logo {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        /* About Section */
+        .about {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .about h2 {
+            font-size: 42px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .about p {
+            font-size: 18px;
+            color: #555;
+            margin: 0 auto 30px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        /* Our Mission Section */
+        .mission {
+            background-color: #ecf0f1;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .mission h3 {
+            font-size: 36px;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .mission p {
+            font-size: 18px;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 60px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .team h3 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .team-members {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            max-width: 250px;
+            margin-bottom: 40px;
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .team-member h4 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .team-member p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer p {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <div style="text-align: center; margin-bottom: 20px;">
-            <h1 style="font-size: 3em; font-weight: bold;">Travel Buddy</h1>
-            <p style="font-size: 1.5em; font-weight: lighter;">Your trusted companion for the best travel experiences</p>
-        </div>
+        <div class="logo">Travel Buddy</div>
     </header>
 
     <!-- About Us Section -->
-    <section id="about" class="about" style="padding: 20px;">
-        <!-- About Travel Buddy -->
-        <article>
-            <h2 style="text-align: center; font-size: 2em; font-weight: bold;">About Travel Buddy</h2>
-            <blockquote style="font-size: 1.2em; font-style: italic; text-align: center; border-left: 5px solid #ccc; padding-left: 10px;">
-                "Making travel easier, more fun, and less stressful for everyone!"
-            </blockquote>
-            <p style="font-size: 1.1em; text-align: center; margin-top: 20px;">At Travel Buddy, our mission is to make travel planning easier and more enjoyable for everyone. Whether you're seeking a relaxing getaway or an adventure of a lifetime, we provide you with the best destinations, detailed itineraries, and personalized recommendations to help you plan your perfect trip.</p>
-        </article>
+    <section class="about">
+        <h2>About Us</h2>
+        <p>
+            Welcome to Travel Buddy, your trusted partner in crafting unforgettable travel experiences. Whether you're dreaming of exploring Bali’s pristine beaches, hiking the mountains of Peru, or discovering hidden gems in Europe, we are here to help you make your dream trip a reality. 
+        </p>
+        <p>
+            With years of experience in the travel industry, our team is dedicated to curating the best itineraries that fit your style and preferences. We believe that travel is the key to personal growth, and we strive to create moments that last a lifetime.
+        </p>
+    </section>
 
-        <!-- Our Story -->
-        <article style="margin-top: 40px;">
-            <h3 style="font-size: 1.8em; font-weight: bold;">Our Story</h3>
-            <p style="font-size: 1.1em;">Founded in 2010, Travel Buddy began with a simple goal: to help people explore the world without the stress of planning. Since then, we've expanded our reach, offering customized travel plans, unique destination ideas, and expert tips. Our team is passionate about making travel accessible and enjoyable for everyone.</p>
-        </article>
+    <!-- Our Mission Section -->
+    <section class="mission">
+        <h3>Our Mission</h3>
+        <p>
+            Our mission is to provide personalized travel experiences that meet your unique needs. We believe that every journey should be an adventure tailored just for you, whether it’s relaxing by the beach, exploring rich cultures, or embarking on thrilling outdoor activities. We’re committed to bringing your travel dreams to life.
+        </p>
+    </section>
 
-        <!-- Our Team -->
-        <article style="margin-top: 40px;">
-            <h3 style="font-size: 1.8em; font-weight: bold;">Our Team</h3>
-            <p style="font-size: 1.1em;">We are a team of experienced travel enthusiasts, tech experts, and customer service specialists who are dedicated to making your travel experience smooth and memorable. Our team works around the clock to provide the best advice and ensure you have everything you need for your next adventure.</p>
-        </article>
-
-        <!-- Why Choose Us -->
-        <article style="margin-top: 40px;">
-            <h3 style="font-size: 1.8em; font-weight: bold;">Why Choose Us?</h3>
-            <p style="font-size: 1.1em;">We believe in making travel easier and more enjoyable. Here's why you'll love Travel Buddy:</p>
-            <ul style="font-size: 1.1em; list-style-type: disc; padding-left: 40px;">
-                <li>Personalized travel plans that suit your style</li>
-                <li>Expert recommendations based on your preferences</li>
-                <li>Accessible and user-friendly platform</li>
-                <li>24/7 support to help you at every step of your journey</li>
-            </ul>
-        </article>
-
-        <!-- Team Showcase -->
-        <article style="margin-top: 40px;">
-            <h3 style="font-size: 1.8em; font-weight: bold;">Meet the Team</h3>
-            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
-                <figure style="text-align: center;">
-                    <img src="https://via.placeholder.com/150" alt="Team Member" style="border-radius: 50%; width: 150px; height: 150px;">
-                    <figcaption style="font-size: 1.1em; font-weight: bold;">Tanush</figcaption>
-                    <p style="font-size: 1em;">CEO & Founder</p>
-                </figure>
-                <figure style="text-align: center;">
-                    <img src="https://via.placeholder.com/150" alt="Team Member" style="border-radius: 50%; width: 150px; height: 150px;">
-                    <figcaption style="font-size: 1.1em; font-weight: bold;">Nigaar</figcaption>
-                    <p style="font-size: 1em;">Lead Travel Expert</p>
-                </figure>
-                <figure style="text-align: center;">
-                    <img src="https://via.placeholder.com/150" alt="Team Member" style="border-radius: 50%; width: 150px; height: 150px;">
-                    <figcaption style="font-size: 1.1em; font-weight: bold;">Harsh</figcaption>
-                    <p style="font-size: 1em;">Customer Service Specialist</p>
-                </figure>
+    <!-- Meet the Team Section -->
+    <section class="team">
+        <h3>Meet The Team</h3>
+        <div class="team-members">
+            <div class="team-member">
+                <img src="https://via.placeholder.com/120" alt="Tanush">
+                <h4>Tanush</h4>
+                <p>Founder & CEO</p>
+                <p>Tanush has spent years traveling the world and is passionate about curating unforgettable travel experiences. He’s dedicated to making every trip special and ensuring that your journey is flawless.</p>
             </div>
-        </article>
+            <div class="team-member">
+                <img src="https://via.placeholder.com/120" alt="Nihaar">
+                <h4>Nihaar</h4>
+                <p>Marketing Head</p>
+                <p>Nihaar brings his marketing expertise to Travel Buddy, ensuring that the world knows about our amazing travel experiences. She’s passionate about sharing the joy of travel with others.</p>
+            </div>
+            <div class="team-member">
+                <img src="https://via.placeholder.com/120" alt="Harsh">
+                <h4>Harsh</h4>
+                <p>Travel Expert</p>
+                <p>Harsh specializes in planning dream vacations for every type of traveler. His attention to detail and love for exploring new destinations ensures each trip is personalized to perfection.</p>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="footer" style="text-align: center; margin-top: 40px; background-color: #f1f1f1; padding: 20px;">
-        <p style="font-size: 1.2em;">Contact Us: <a href="mailto:info@travelbuddy.com" style="font-weight: bold;">info@travelbuddy.com</a></p>
+    <footer>
+        <p>Contact Us: info@travelbuddy.com</p>
     </footer>
 
 </body>
