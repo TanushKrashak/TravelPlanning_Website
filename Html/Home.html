@@ -6,7 +6,255 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Travel Buddy - Plan Your Perfect Trip</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Css/Home.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F9F7F7; /* Light off-white background */
+            color: #112D4E; /* Dark blue text */
+        }
+
+        /* Header */
+        .header {
+            background-color: #3F72AF; /* Medium blue for header */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .header .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #F9F7F7; /* Light off-white for logo text */
+        }
+
+        .header nav ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .header nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        .header nav ul li a {
+            color: #F9F7F7; /* Light off-white for nav links */
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .header nav ul li a:hover {
+            color: #DBE2EF; /* Pale blue on hover */
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 60vh;
+            background-color: #112D4E; /* Dark blue for the hero background */
+            position: relative;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .hero .hero-content {
+            position: absolute;
+            top: 20%;
+            color: #F9F7F7;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: #3F72AF; /* Medium blue for CTA button */
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            color: #F9F7F7;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #DBE2EF; /* Pale blue for hover */
+            transform: scale(1.1);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 60px 20px;
+            background-color: #DBE2EF; /* Pale blue background for gallery */
+            text-align: center;
+        }
+
+        .gallery h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #112D4E; /* Dark blue for headings */
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: #3F72AF; /* Medium blue for card background */
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+            max-height: 200px; /* Set maximum height for consistency */
+            object-position: center;
+        }
+
+        .card:hover img {
+            opacity: 0.8;
+        }
+
+        .card-content {
+            padding: 20px;
+            background-color: #F9F7F7; /* Light off-white for card content */
+        }
+
+        .card-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #112D4E; /* Dark blue for card headings */
+        }
+
+        .card-content p {
+            font-size: 1rem;
+            color: #112D4E; /* Dark blue for text */
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #112D4E; /* Dark blue for footer */
+            color: #F9F7F7; /* Light off-white for footer text */
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+        }
+
+        .footer .back-to-top {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #3F72AF; /* Medium blue for back-to-top button */
+            color: #F9F7F7;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer .back-to-top:hover {
+            background-color: #DBE2EF; /* Pale blue for hover */
+            transform: scale(1.1);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .gallery h2 {
+                font-size: 2rem;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header nav ul li {
+                margin-left: 15px;
+            }
+
+            .header nav ul li a {
+                font-size: 0.9rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                height: 50vh;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .gallery h2 {
+                font-size: 1.8rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -18,9 +266,9 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#destinations">Book</a></li>
                 <li><a href="packages.html">Packages</a></li>
-                <li><a href="#contact">Services</a></li>
-                <li><a href="#about">About</a></li>
                 <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact Us</a></li>
                 <li><a href="#review">Review</a></li>
             </ul>
         </nav>
@@ -122,7 +370,6 @@
         </div>
     </section>
         
-    
     <!-- Footer -->
     <footer id="contact" class="footer">
         <div class="footer-content">
