@@ -7,7 +7,7 @@ This is a modern web site built to help users plan their perfect trips, manage b
 
 ## 📜 Web Pages
 
-Here is a list of the main pages included in the **Travel Buddy** app:
+Here is a list of the main pages included in the **Travel Buddy** Site:
 
 1. **Home** - The landing page showcasing the highlights of the platform and its main features.
 2. **About Us** - Learn more about the team behind Travel Buddy and our mission to provide amazing travel experiences.
@@ -25,7 +25,7 @@ Here is a list of the main pages included in the **Travel Buddy** app:
 
 ## ⚙️ Technologies Used
 
-This web application is developed using the following technologies:
+This website is developed using the following technologies:
 
 - **HTML**: For creating the structure and content of the web pages.
 - **CSS**: To style and create a visually appealing user interface.
@@ -36,7 +36,7 @@ This web application is developed using the following technologies:
 
 ## 💻 Features
 
-- **Responsive Design**: The web application is fully responsive, ensuring a seamless experience on both desktop and mobile devices.
+- **Responsive Design**: The website is fully responsive, ensuring a seamless experience on both desktop and mobile devices.
 - **Interactive UI**: Enhanced user experience through dynamic elements like forms, navigation, and interactive galleries.
 - **User Authentication**: Users can securely log in and sign up to manage their travel preferences and bookings.
 - **Database Integration**: MySQL is integrated for storing user information, reviews, bookings, and destination data.
