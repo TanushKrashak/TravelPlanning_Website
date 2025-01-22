@@ -5,55 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gallery - Travel Buddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #gallery {
+            padding: 20px;
+        }
+
+        #gallery h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        #gallery p {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .gallery-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 4px solid #ddd;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item p {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div style="text-align:center; padding: 20px; font-size: 36px; font-weight: bold;">
-            Travel Buddy
-        </div>
-    </header>
-
-    <!-- Gallery Section -->
     <section id="gallery">
-        <h2 style="text-align:center; font-size: 28px; margin-bottom: 20px;">Our Travel Gallery</h2>
-        <p style="text-align:center; font-size: 18px; margin-bottom: 40px;">Explore the beauty of the world's most stunning destinations captured through the lens of our travelers.</p>
+        <h2>Our Travel Gallery</h2>
+        <p>Explore the beauty of the world's most stunning destinations captured through the lens of our travelers.</p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 0 20px;">
-            <div style="border: 1px solid #ddd; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <img src="https://source.unsplash.com/300x200/?beach" alt="Beach Destination" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-                <p style="text-align: center; font-size: 18px; font-weight: bold;">Beach Paradise</p>
+        <div class="gallery-container">
+            <!-- Beach Paradise -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/300x200/?beach" alt="Beach Destination">
+                <p>Beach Paradise</p>
             </div>
-            <div style="border: 1px solid #ddd; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <img src="https://source.unsplash.com/300x200/?mountain" alt="Mountain Destination" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-                <p style="text-align: center; font-size: 18px; font-weight: bold;">Mountain Adventure</p>
+
+            <!-- Mountain Adventure -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/300x200/?mountain" alt="Mountain Destination">
+                <p>Mountain Adventure</p>
             </div>
-            <div style="border: 1px solid #ddd; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <img src="https://source.unsplash.com/300x200/?city" alt="City Destination" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-                <p style="text-align: center; font-size: 18px; font-weight: bold;">City Lights</p>
+
+            <!-- City Lights -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/300x200/?city" alt="City Destination">
+                <p>City Lights</p>
             </div>
-            <div style="border: 1px solid #ddd; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <img src="https://source.unsplash.com/300x200/?desert" alt="Desert Destination" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-                <p style="text-align: center; font-size: 18px; font-weight: bold;">Desert Beauty</p>
+
+            <!-- Desert Beauty -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/300x200/?desert" alt="Desert Destination">
+                <p>Desert Beauty</p>
             </div>
-            <div style="border: 1px solid #ddd; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <img src="https://source.unsplash.com/300x200/?forest" alt="Forest Destination" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-                <p style="text-align: center; font-size: 18px; font-weight: bold;">Forest Escape</p>
+
+            <!-- Forest Escape -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/300x200/?forest" alt="Forest Destination">
+                <p>Forest Escape</p>
             </div>
-            <div style="border: 1px solid #ddd; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <img src="https://source.unsplash.com/300x200/?island" alt="Island Destination" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-                <p style="text-align: center; font-size: 18px; font-weight: bold;">Tropical Island</p>
+
+            <!-- Tropical Island -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/300x200/?island" alt="Island Destination">
+                <p>Tropical Island</p>
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer>
-        <div style="text-align:center; padding: 20px; background-color: #f1f1f1;">
-            <p>Contact Us: info@travelbuddy.com</p>
-        </div>
-    </footer>
 
 </body>
 </html>
