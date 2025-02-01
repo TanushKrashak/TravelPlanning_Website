@@ -51,3 +51,4 @@ To get started with this project locally:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/your-username/travel-buddy.git
+2. **Open the website by opening the Home.html in any Web Browser**
