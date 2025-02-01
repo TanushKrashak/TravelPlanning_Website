@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Travel Planning</title>
+<style>
+    body {
+        margin: 0;
+        background-image: url('https://wallpaperaccess.com/full/254381.jpg');
+        background-size: cover;
+        background-position: center;
+        color: #f9fcf5;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #main {
+        width: 600px;
+        height: auto;
+        overflow: hidden;
+        padding-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        padding-left: 20px;
+        margin-top: 50px;
+        border-top: 3px double #f1f1f1;
+        border-bottom: 3px double #f1f1f1;
+        padding-top: 20px;
+        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+        box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    #main table {
+        font-family: "Comic Sans MS", cursive;
+    }
+
+    #main .tb {
+        height: 28px;
+        width: 230px;
+        border: 1px solid #000000;
+        color: #000000;
+        font-weight: bold;
+        border-left: 5px solid #f7f7f7;
+        opacity: 0.9;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    #main .tb:focus {
+        height: 28px;
+        border: 1px solid #000000;
+        outline: none;
+        border-left: 5px solid #f7f7f7;
+    }
+
+    #main .btn {
+        width: 150px;
+        height: 32px;
+        outline: none;
+        color: #f7f7f7;
+        font-weight: bold;
+        border: 0px solid #000000;
+        text-shadow: 0px 0.5px 0.5px #fff;
+        border-radius: 5px;
+        font-weight: 600;
+        color: #000000;
+        letter-spacing: 1px;
+        font-size: 14px;
+        background-color: #f1f1f1;
+        transition: 1s;
+    }
+
+    #main .btn:hover {
+        background-color: #000000;
+        outline: none;
+        border-radius: 5px;
+        color: #f1f1f1;
+        border: 1px solid #f1f1f1;
+        transition: 1s;
+    }
+
+    .h-tag h2 {
+        text-align: center;
+        color: #f1f1f1;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .login table {
+        width: 100%;
+    }
+
+    .login table td {
+        padding: 10px;
+    }
+
+    .login table td:first-child {
+        text-align: right;
+        color: #f1f1f1;
+    }
+
+    .login table td:last-child {
+        text-align: left;
+    }
+
+    .login table input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .login table select {
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #000000;
+        background-color: #f1f1f1;
+    }
+
+    .login table input[type="date"] {
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #000000;
+        background-color: #f1f1f1;
+    }
+
+    .login table input[type="checkbox"] {
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+<form action="home.html" method="post">
+<div id="main">
+    <div class="h-tag">
+        <h2>Plan Your Trip with Us!</h2>
+    </div>
+    <div class="login">
+        <table cellspacing="2" align="center" cellpadding="8" border="0">
+            <tr>
+                <td align="right">First Name</td>
+                <td><input placeholder="Enter Your First Name" id="t1" class="tb" type="text" name="name" title="Enter first name (e.g., Charles)" onkeydown="return /[a-zA-Z]/i.test(event.key)" required></td>
+            </tr>
+            <tr>
+                <td align="right">Last Name</td>
+                <td><input placeholder="Enter Your Last Name" id="t2" class="tb" type="text" name="name" title="Enter last name (e.g., Leclerc)" onkeydown="return /[a-zA-Z]/i.test(event.key)" required></td>
+            </tr>
+            <tr>
+                <td align="right">Email ID</td>
+                <td><input placeholder="Enter Email ID" id="t3" class="tb" type="email" required></td>
+            </tr>
+            <tr>
+                <td align="right">Date of Birth</td>
+                <td><input type="date" id="t4" class="tb" required></td>
+            </tr>
+            <tr>
+                <td align="right">Gender</td>
+                <td>
+                    <input type="radio" id="male" name="gender" value="male" required> Male
+                    <input type="radio" id="female" name="gender" value="female"> Female
+                    <input type="radio" id="other" name="gender" value="other"> Other
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Phone Number</td>
+                <td><input type="text" name="phone" placeholder="Enter Your Phone Number" title="Enter ten-digit number" pattern="[1-9]{1}[0-9]{9}" maxlength="10" id="t5" class="tb" required></td>
+            </tr>
+            <tr>
+                <td align="right">Travel Date</td>
+                <td><input type="date" id="travelDate" class="tb" required></td>
+            </tr>
+            <tr>
+                <td align="right">Destination</td>
+                <td>
+                    <select id="destination" class="tb" required>
+                        <option value="">Select Destination</option>
+                        <option value="paris">Paris</option>
+                        <option value="newyork">New York</option>
+                        <option value="tokyo">Tokyo</option>
+                        <option value="london">London</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Password</td>
+                <td><input type="password" placeholder="Enter Password" id="t6" class="tb" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters" required></td>
+            </tr>
+            <tr>
+                <td align="right">Confirm Password</td>
+                <td><input type="password" placeholder="Re-Enter Password" id="t7" class="tb" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must match the password above" required></td>
+            </tr>
+            <tr>
+                <td align="right">Subscribe to Newsletter</td>
+                <td><input type="checkbox" id="newsletter" name="newsletter" value="yes"> Yes, I want to subscribe to the newsletter.</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="reset" value="Clear Form" onclick="clearFunc()" id="res" class="btn">
+                    <input type="submit" value="Submit" class="btn">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</form>
+</body>
+</html>
