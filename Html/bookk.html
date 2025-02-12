@@ -91,6 +91,18 @@
         .suggestions textarea {
             resize: vertical;
         }
+        .confirmation-details {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .confirmation-details h3 {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -130,6 +142,10 @@
 </section>
 
 <script>
+    let selectedFlight = null; // Variable to store the selected flight
+    let personalDetails = {}; // Variable to store personal details
+    let suggestions = ""; // Variable to store suggestions
+
     const flights = [
         {
             airline: "Emirates",
@@ -189,11 +205,22 @@
     }
 
     function selectFlight(index) {
-        const selectedFlight = flights[index];
+        selectedFlight = flights[index];
         alert(`You selected ${selectedFlight.airline} for ₹${selectedFlight.price}`);
     }
 
     function nextSection(sectionId) {
+        // For personal details, store the data
+        if (sectionId === 'flight-options') {
+            personalDetails = {
+                numPeople: document.getElementById('num-people').value,
+                fullName: document.getElementById('full-name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                dob: document.getElementById('dob').value
+            };
+        }
+
         document.querySelectorAll('.section').forEach(section => {
             section.style.display = 'none';
         });
@@ -202,11 +229,12 @@
         if (sectionId === 'flight-options') {
             displayFlights();
         }
+
+        if (sectionId === 'confirmation-page') {
+            displaySuggestions(); // Call displaySuggestions when showing confirmation page
+        }
     }
-</script>
-
-
-        <!-- Payment Form -->
+</script>... <!-- Payment Form -->
         <section id="payment-form" class="section payment-form" style="display:none;">
             <h2>Payment Information</h2>
             <form id="payment-details-form">
@@ -223,8 +251,38 @@
             </form>
         </section>
 
+        <!-- Confirmation Section -->
+        <section id="confirmation-page" class="section confirmation-page" style="display:none;">
+            <h2>Booking Confirmation</h2>
+            <div class="confirmation-details">
+                <h3>Personal Details</h3>
+                <p><strong>Full Name:</strong> <span id="confirm-name"></span></p>
+                <p><strong>Email:</strong> <span id="confirm-email"></span></p>
+            </div>
+            <div class="confirmation-details">
+                <h3>Flight Details</h3>
+                <p><strong>Airline:</strong> <span id="confirm-airline"></span></p>
+                <p><strong>Price:</strong> ₹<span id="confirm-price"></span></p>
+            </div>
+            <div class="confirmation-details">
+                <h3>Payment Details</h3>
+                <p><strong>Card Number:</strong> <span id="confirm-card"></span></p>
+            </div>
+            <div class="confirmation-details">
+              <h3>Suggestions</h3>
+              <p><span id="confirm-suggestions"></span></p>
+            </div>
+            <button onclick="confirmBooking()">Confirm Booking</button>
+        </section>
+
+        <!-- Booking Confirmed Section -->
+        <section id="booking-confirmed" class="section" style="display:none;">
+            <h2>Booking Confirmed!</h2>
+            <p>Thank you for your purchase. Your booking is now confirmed.</p>
+        </section>
+
         <!-- Suggestions Section -->
-        <section class="suggestions">
+        <section id="suggestions-section" class="suggestions">
             <h2>Suggestions or Changes to Itinerary</h2>
             <textarea id="suggestions" rows="4" placeholder="Enter your suggestions here..."></textarea>
             <button onclick="submitSuggestions()">Submit Suggestions</button>
@@ -232,52 +290,37 @@
     </div>
 
     <script>
-        const flights = [
-            { airline: "Emirates", price: 85264, duration: "13h 35m, 1 stop (DXB)", departure: "10:25 AM", arrival: "7:30 PM" },
-            { airline: "Air France", price: 85264, duration: "10h 25m, Direct", departure: "2:10 AM", arrival: "8:05 AM" },
-            { airline: "Gulf Air", price: 71527, duration: "13h 40m, 1 stop (BAH)", departure: "9:35 PM", arrival: "6:45 AM" },
-        ];
-
-        function displayFlights() {
-            const flightListDiv = document.getElementById('flight-list');
-            flightListDiv.innerHTML = '';
-
-            flights.sort((a, b) => a.price - b.price).forEach(flight => {
-                const flightDiv = document.createElement('div');
-                flightDiv.classList.add('flight-option');
-
-                flightDiv.innerHTML = `
-                    <div class="flight-info">
-                        <span><strong>Airline:</strong> ${flight.airline}</span>
-                        <span><strong>Price:</strong> ₹${flight.price}</span>
-                        <span><strong>Duration:</strong> ${flight.duration}</span>
-                        <span><strong>Departure:</strong> ${flight.departure}</span>
-                        <span><strong>Arrival:</strong> ${flight.arrival}</span>
-                    </div>
-                    <button class="small-button" onclick="selectFlight('${flight.airline}', ${flight.price})">Select</button>
-                `;
-
-                flightListDiv.appendChild(flightDiv);
-            });
-        }
-
-        function nextSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById(sectionId).style.display = 'block';
-
-            if (sectionId === 'flight-options') {
-                displayFlights();
-            }
-        }
-
-        function selectFlight(airline, price) {
-            alert(`You selected ${airline} flight for ₹${price}`);
-        }
+        // Keep the previous flight array and functions
+        // ...
 
         function submitPayment() {
-            alert("Payment Successful! Your flight is booked.");
+            // Get card number
+            const cardNumber = document.getElementById('card-number').value;
+
+            // Mask card number
+            const maskedCardNumber = 'xxxx-xxxx-xxxx-' + cardNumber.slice(-4);
+
+            // Populate confirmation details
+            document.getElementById('confirm-name').innerText = personalDetails.fullName;
+            document.getElementById('confirm-email').innerText = personalDetails.email;
+            document.getElementById('confirm-airline').innerText = selectedFlight.airline;
+            document.getElementById('confirm-price').innerText = selectedFlight.price.toLocaleString();
+            document.getElementById('confirm-card').innerText = maskedCardNumber;
+
+            suggestions = document.getElementById('suggestions').value.trim(); // Store suggestions
+
+            // Hide suggestions section
+            document.getElementById('suggestions-section').style.display = 'none';
+
+            nextSection('confirmation-page');
+        }
+
+        function confirmBooking() {
+            // Hide confirmation page
+            document.getElementById('confirmation-page').style.display = 'none';
+
+            // Show booking confirmed section
+            document.getElementById('booking-confirmed').style.display = 'block';
         }
 
         function submitSuggestions() {
@@ -287,6 +330,10 @@
             } else {
                 alert("No suggestions provided.");
             }
+        }
+
+        function displaySuggestions() {
+            document.getElementById('confirm-suggestions').innerText = suggestions; // Display stored suggestions
         }
     </script>
 </body>
