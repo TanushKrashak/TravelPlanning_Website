@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Your Flight</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -11,6 +15,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             width: 90%;
             margin: 20px auto;
@@ -19,26 +24,32 @@
             padding: 30px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #333;
             font-size: 2.5rem;
         }
+
         h2 {
             color: #b17457;
             font-size: 1.8rem;
             margin-bottom: 10px;
         }
+
         .section {
             margin-bottom: 30px;
         }
+
         label {
             font-size: 1.2rem;
             color: #555;
             margin-bottom: 8px;
             display: block;
         }
-        input, textarea {
+
+        input,
+        textarea {
             width: 100%;
             padding: 12px;
             margin-bottom: 15px;
@@ -47,6 +58,7 @@
             font-size: 1rem;
             outline: none;
         }
+
         button {
             background-color: #b17457;
             color: white;
@@ -58,9 +70,11 @@
             width: 100%;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #9d644d;
         }
+
         .flight-option {
             display: flex;
             justify-content: space-between;
@@ -70,17 +84,21 @@
             margin-bottom: 10px;
             border-radius: 5px;
         }
+
         .flight-option:hover {
             background-color: #f0e4df;
         }
+
         .flight-info {
             display: flex;
             flex-direction: column;
         }
+
         .flight-info span {
             font-size: 1rem;
             margin-bottom: 4px;
         }
+
         .small-button {
             background-color: #b17457;
             color: white;
@@ -88,9 +106,11 @@
             font-size: 0.9rem;
             border-radius: 5px;
         }
+
         .suggestions textarea {
             resize: vertical;
         }
+
         .confirmation-details {
             margin-bottom: 20px;
             padding: 15px;
@@ -98,13 +118,45 @@
             border-radius: 5px;
             background-color: #f9f9f9;
         }
+
         .confirmation-details h3 {
             font-size: 1.3rem;
             color: #555;
             margin-bottom: 10px;
         }
+
+        /* New styles for booking confirmed section */
+        #booking-confirmed {
+            text-align: center;
+            padding: 40px;
+            background-color: #e9faee;
+            /* Light green background */
+            border: 2px solid #a7e6b8;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #38764b;
+            /* Dark green text */
+        }
+
+        #booking-confirmed h2 {
+            color: #38764b;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #booking-confirmed i {
+            font-size: 3rem;
+            color: #38764b;
+            margin-bottom: 20px;
+        }
+
+        #booking-confirmed p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Book Your Flight Now</h1>
@@ -128,113 +180,20 @@
                 <label for="dob">Date of Birth</label>
                 <input type="date" id="dob" name="dob" required>
 
-                <button type="button" onclick="nextSection('flight-options')">Next</button>
+                <button type="button" onclick="validatePersonalDetails()">Next</button>
             </form>
         </section>
 
-              <!-- Flight Options -->
-<section id="flight-options" class="section flight-options" style="display:none;">
-    <h2>Choose Your Flight</h2>
-    <div id="flight-list">
-        <!-- Flight details will be dynamically inserted here -->
-    </div>
-    <button type="button" onclick="nextSection('payment-form')">Next: Payment</button>
-</section>
+        <!-- Flight Options -->
+        <section id="flight-options" class="section flight-options" style="display:none;">
+            <h2>Choose Your Flight</h2>
+            <div id="flight-list">
+                <!-- Flight details will be dynamically inserted here -->
+            </div>
+            <button type="button" onclick="nextSection('payment-form')">Next: Payment</button>
+        </section>
 
-<script>
-    let selectedFlight = null; // Variable to store the selected flight
-    let personalDetails = {}; // Variable to store personal details
-    let suggestions = ""; // Variable to store suggestions
-
-    const flights = [
-        {
-            airline: "Emirates",
-            price: 127839,
-            duration: "20h 50m, 1 stop (DXB)",
-            departure: "15:40 BOM",
-            arrival: "08:00+1 CDG",
-            sponsored: true
-        },
-        {
-            airline: "Air France",
-            price: 83211,
-            duration: "10h 25m, Direct",
-            departure: "02:10 BOM",
-            arrival: "08:05 CDG",
-            sponsored: false
-        },
-        {
-            airline: "Air France",
-            price: 83211,
-            duration: "8h 40m, Direct",
-            departure: "13:50 CDG",
-            arrival: "03:00+1 BOM",
-            sponsored: false
-        }
-    ];
-
-    function displayFlights() {
-        const flightListDiv = document.getElementById('flight-list');
-        flightListDiv.innerHTML = '';
-
-        flights.forEach((flight, index) => {
-            const flightDiv = document.createElement('div');
-            flightDiv.classList.add('flight-option');
-
-            flightDiv.innerHTML = `
-                <div style="display: flex; align-items: center; width: 100%;">
-                    <div style="flex: 1;">
-                        <div style="display: flex; flex-direction: column;">
-                            <span><strong>${flight.airline}</strong></span>
-                            <span>Departure: ${flight.departure}</span>
-                            <span>Arrival: ${flight.arrival}</span>
-                            <span>Duration: ${flight.duration}</span>
-                        </div>
-                    </div>
-                    <div style="flex: 1;">
-                        <span><strong>Price: ₹${flight.price.toLocaleString()}</strong></span>
-                    </div>
-                    <div style="flex-shrink: 0;">
-                        <button class="small-button" onclick="selectFlight(${index})">Select</button>
-                    </div>
-                </div>
-            `;
-
-            flightListDiv.appendChild(flightDiv);
-        });
-    }
-
-    function selectFlight(index) {
-        selectedFlight = flights[index];
-        alert(`You selected ${selectedFlight.airline} for ₹${selectedFlight.price}`);
-    }
-
-    function nextSection(sectionId) {
-        // For personal details, store the data
-        if (sectionId === 'flight-options') {
-            personalDetails = {
-                numPeople: document.getElementById('num-people').value,
-                fullName: document.getElementById('full-name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                dob: document.getElementById('dob').value
-            };
-        }
-
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.display = 'none';
-        });
-        document.getElementById(sectionId).style.display = 'block';
-
-        if (sectionId === 'flight-options') {
-            displayFlights();
-        }
-
-        if (sectionId === 'confirmation-page') {
-            displaySuggestions(); // Call displaySuggestions when showing confirmation page
-        }
-    }
-</script>... <!-- Payment Form -->
+        <!-- Payment Form -->
         <section id="payment-form" class="section payment-form" style="display:none;">
             <h2>Payment Information</h2>
             <form id="payment-details-form">
@@ -247,7 +206,7 @@
                 <label for="cvv">CVV</label>
                 <input type="password" id="cvv" name="cvv" required>
 
-                <button type="button" onclick="submitPayment()">Confirm Payment</button>
+                <button type="button" onclick="validatePaymentDetails()">Confirm Payment</button>
             </form>
         </section>
 
@@ -269,20 +228,21 @@
                 <p><strong>Card Number:</strong> <span id="confirm-card"></span></p>
             </div>
             <div class="confirmation-details">
-              <h3>Suggestions</h3>
-              <p><span id="confirm-suggestions"></span></p>
+                <h3>Suggestions</h3>
+                <p><span id="confirm-suggestions"></span></p>
             </div>
             <button onclick="confirmBooking()">Confirm Booking</button>
         </section>
 
         <!-- Booking Confirmed Section -->
         <section id="booking-confirmed" class="section" style="display:none;">
-            <h2>Booking Confirmed!</h2>
-            <p>Thank you for your purchase. Your booking is now confirmed.</p>
+            <i class="fas fa-check-circle"></i>
+            <h2>Bon Voyage!</h2>
+            <p>Your flight is booked and confirmed. We wish you a safe and pleasant journey!</p>
         </section>
 
         <!-- Suggestions Section -->
-        <section id="suggestions-section" class="suggestions">
+        <section class="suggestions">
             <h2>Suggestions or Changes to Itinerary</h2>
             <textarea id="suggestions" rows="4" placeholder="Enter your suggestions here..."></textarea>
             <button onclick="submitSuggestions()">Submit Suggestions</button>
@@ -290,8 +250,97 @@
     </div>
 
     <script>
-        // Keep the previous flight array and functions
-        // ...
+        let selectedFlight = null; // Variable to store the selected flight
+        let personalDetails = {}; // Variable to store personal details
+        let suggestions = ""; // Variable to store suggestions
+
+        const flights = [{
+                airline: "Emirates",
+                price: 127839,
+                duration: "20h 50m, 1 stop (DXB)",
+                departure: "15:40 BOM",
+                arrival: "08:00+1 CDG",
+                sponsored: true
+            },
+            {
+                airline: "Air France",
+                price: 83211,
+                duration: "10h 25m, Direct",
+                departure: "02:10 BOM",
+                arrival: "08:05 CDG",
+                sponsored: false
+            },
+            {
+                airline: "Air France",
+                price: 83211,
+                duration: "8h 40m, Direct",
+                departure: "13:50 CDG",
+                arrival: "03:00+1 BOM",
+                sponsored: false
+            }
+        ];
+
+        function displayFlights() {
+            const flightListDiv = document.getElementById('flight-list');
+            flightListDiv.innerHTML = '';
+
+            flights.forEach((flight, index) => {
+                const flightDiv = document.createElement('div');
+                flightDiv.classList.add('flight-option');
+
+                flightDiv.innerHTML = `
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <div style="flex: 1;">
+                        <div style="display: flex; flex-direction: column;">
+                            <span><strong>${flight.airline}</strong></span>
+                            <span>Departure: ${flight.departure}</span>
+                            <span>Arrival: ${flight.arrival}</span>
+                            <span>Duration: ${flight.duration}</span>
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <span><strong>Price: ₹${flight.price.toLocaleString()}</strong></span>
+                    </div>
+                    <div style="flex-shrink: 0;">
+                        <button class="small-button" onclick="selectFlight(${index})">Select</button>
+                    </div>
+                </div>
+            `;
+
+                flightListDiv.appendChild(flightDiv);
+            });
+        }
+
+        function selectFlight(index) {
+            selectedFlight = flights[index];
+            alert(`You selected ${selectedFlight.airline} for ₹${selectedFlight.price}`);
+        }
+
+        function nextSection(sectionId) {
+            // For personal details, store the data
+            if (sectionId === 'flight-options') {
+                personalDetails = {
+                    numPeople: document.getElementById('num-people').value,
+                    fullName: document.getElementById('full-name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    dob: document.getElementById('dob').value
+                };
+            }
+
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+
+            if (sectionId === 'flight-options') {
+                displayFlights();
+            }
+
+            if (sectionId === 'confirmation-page') {
+                displaySuggestions(); // Call displaySuggestions when showing confirmation page
+            }
+        }
 
         function submitPayment() {
             // Get card number
@@ -310,7 +359,7 @@
             suggestions = document.getElementById('suggestions').value.trim(); // Store suggestions
 
             // Hide suggestions section
-            document.getElementById('suggestions-section').style.display = 'none';
+            document.querySelector('.suggestions').style.display = 'none';
 
             nextSection('confirmation-page');
         }
@@ -327,6 +376,7 @@
             const suggestionText = document.getElementById('suggestions').value.trim();
             if (suggestionText) {
                 alert(`Your suggestions: \n${suggestionText}`);
+                document.querySelector('.suggestions').style.display = 'none'; // Hide suggestions section
             } else {
                 alert("No suggestions provided.");
             }
@@ -335,6 +385,86 @@
         function displaySuggestions() {
             document.getElementById('confirm-suggestions').innerText = suggestions; // Display stored suggestions
         }
+
+        function validatePersonalDetails() {
+            const numPeople = document.getElementById('num-people').value;
+            const fullName = document.getElementById('full-name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const dob = document.getElementById('dob').value;
+
+            if (!/^\d+$/.test(numPeople) || parseInt(numPeople) <= 0) {
+                alert("Number of travelers must be a positive integer.");
+                return;
+            }
+
+            if (!/^[a-zA-Z\s]+$/.test(fullName) || fullName.trim() === "") {
+                alert("Full name must not be empty and contain only letters and spaces.");
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            if (!/^\d{10}$/.test(phone)) { // Example: 10-digit phone number
+                alert("Please enter a valid 10-digit phone number.");
+                return;
+            }
+
+            if (!isValidDate(dob)) {
+                alert("Please enter a valid date of birth.");
+                return;
+            }
+
+            if (new Date(dob) > new Date()) {
+                alert("Date of birth cannot be a future date.");
+                return;
+            }
+
+            nextSection('flight-options');
+        }
+
+        function validatePaymentDetails() {
+            const cardNumber = document.getElementById('card-number').value;
+            const expiryDate = document.getElementById('expiry-date').value;
+            const cvv = document.getElementById('cvv').value;
+
+            if (!/^\d{16}$/.test(cardNumber)) { // Example: 16-digit card number
+                alert("Please enter a valid 16-digit card number.");
+                return;
+            }
+
+            if (!isValidExpiryDate(expiryDate)) {
+                alert("Please enter a valid expiry date (future month).");
+                return;
+            }
+
+            if (!/^\d{3,4}$/.test(cvv)) {
+                alert("Please enter a valid 3 or 4-digit CVV.");
+                return;
+            }
+
+            submitPayment(); // Proceed to payment if validation passes
+        }
+
+        function isValidDate(dateString) {
+            return !isNaN(new Date(dateString));
+        }
+
+        function isValidExpiryDate(expiry) {
+            const [year, month] = expiry.split('-').map(Number);
+            const expiryDate = new Date(year, month - 1); // Month is 0-indexed
+            const currentDate = new Date();
+
+            // Set time to midnight to compare only year and month
+            expiryDate.setHours(0, 0, 0, 0);
+            currentDate.setHours(0, 0, 0, 0);
+
+            return expiryDate > currentDate;
+        }
     </script>
 </body>
+
 </html>
