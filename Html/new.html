@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Packages - Book Your Dream Vacation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F9F7F7;
+            color: #112D4E;
+        }
+
+        header {
+            background-color: #3F72AF;
+            color: #F9F7F7;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            border: 1px solid #DBE2EF;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 1px solid #DBE2EF;
+        }
+
+        th {
+            background-color: #3F72AF;
+            color: #F9F7F7;
+        }
+
+        tr:nth-child(even) {
+            background-color: #DBE2EF;
+        }
+
+        tr:hover {
+            background-color: #3F72AF;
+            color: #F9F7F7;
+        }
+
+        .package-btn {
+            background-color: #3F72AF;
+            padding: 12px 25px;
+            color: #F9F7F7;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .package-btn:hover {
+            background-color: #DBE2EF;
+            transform: scale(1.1);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            table {
+                font-size: 1rem;
+            }
+
+            .package-btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Exclusive Travel Packages</h1>
+    </header>
+
+    <!-- Travel Package Table Section -->
+    <section>
+        <h2>Choose Your Dream Destination</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Package Type</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bali</td>
+                        <td>Luxury</td>
+                        <td>7 Days, 6 Nights</td>
+                        <td>$1,500</td>
+                    </tr>
+                    <tr>
+                        <td>Italy</td>
+                        <td>Romantic</td>
+                        <td>10 Days, 9 Nights</td>
+                        <td>$2,200</td>
+                    </tr>
+                    <tr>
+                        <td>France</td>
+                        <td>Adventure</td>
+                        <td>14 Days, 13 Nights</td>
+                        <td>$3,500</td>
+                    </tr>
+                    <tr>
+                        <td>Japan</td>
+                        <td>Explorer</td>
+                        <td>12 Days, 11 Nights</td>
+                        <td>$2,000</td>
+                    </tr>
+                    <tr>
+                        <td>Australia</td>
+                        <td>Family</td>
+                        <td>8 Days, 7 Nights</td>
+                        <td>$1,800</td>
+                    </tr>
+                    <tr>
+                        <td>New Zealand</td>
+                        <td>Adventure</td>
+                        <td>14 Days, 13 Nights</td>
+                        <td>$2,500</td>
+                    </tr>
+                    <tr>
+                        <td>USA</td>
+                        <td>Explorer</td>
+                        <td>15 Days, 14 Nights</td>
+                        <td>$3,000</td>
+                    </tr>
+                    <tr>
+                        <td>Thailand</td>
+                        <td>Beach</td>
+                        <td>7 Days, 6 Nights</td>
+                        <td>$1,200</td>
+                    </tr>
+                    <tr>
+                        <td>Spain</td>
+                        <td>Cultural</td>
+                        <td>9 Days, 8 Nights</td>
+                        <td>$2,100</td>
+                    </tr>
+                    <tr>
+                        <td>Egypt</td>
+                        <td>History</td>
+                        <td>10 Days, 9 Nights</td>
+                        <td>$2,300</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <a href="#contact" class="package-btn">Contact Us for Booking</a>
+    </section>
+
+</body>
+</html>

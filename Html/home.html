@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Buddy - Plan Your Perfect Trip</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ECDFCC; /* Light beige background */
+            color: rgb(24, 28, 20); /* Dark teal for text */
+        }
+
+        /* Header */
+        .header {
+            background-color: #3C3D37; /* Dark greyish-green for header */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .header .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ECDFCC; /* Light beige for logo text */
+        }
+
+        .header nav ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .header nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        .header nav ul li a {
+            color: #ECDFCC; /* Light beige for nav links */
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .header nav ul li a:hover {
+            color: rgb(105, 117, 101); /* Teal on hover */
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 60vh;
+            background-color: rgb(24, 28, 20); /* Dark teal background */
+            position: relative;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .hero .hero-content {
+            position: absolute;
+            top: 20%;
+            color: #ECDFCC;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: #697565; /* Olive green for CTA button */
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            color: #ECDFCC;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: rgb(60, 61, 55); /* Darker greyish green for hover */
+            transform: scale(1.1);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 60px 20px;
+            background-color: rgb(236, 223, 204); /* Beige background for gallery */
+            text-align: center;
+        }
+
+        .gallery h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: rgb(24, 28, 20); /* Dark teal for headings */
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: #181C14; /* Dark brown for card background */
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+            max-height: 200px; /* Set maximum height for consistency */
+            object-position: center;
+        }
+
+        .card:hover img {
+            opacity: 0.8;
+        }
+
+        .card-content {
+            padding: 20px;
+            background-color: #ECDFCC; /* Light beige for card content */
+        }
+
+        .card-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: rgb(24, 28, 20); /* Dark teal for card headings */
+        }
+
+        .card-content p {
+            font-size: 1rem;
+            color: rgb(24, 28, 20); /* Dark teal for text */
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #181C14; /* Dark brown for footer */
+            color: #ECDFCC; /* Light beige for footer text */
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+        }
+
+        .footer .back-to-top {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #697565; /* Olive green for back-to-top button */
+            color: #ECDFCC;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer .back-to-top:hover {
+            background-color: rgb(60, 61, 55); /* Darker greyish green for hover */
+            transform: scale(1.1);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .gallery h2 {
+                font-size: 2rem;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header nav ul li {
+                margin-left: 15px;
+            }
+
+            .header nav ul li a {
+                font-size: 0.9rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                height: 50vh;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .gallery h2 {
+                font-size: 1.8rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">Travel</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#destinations">Book</a></li>
+                <li><a href="packages.html">Packages</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#review">Review</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <img src="https://w0.peakpx.com/wallpaper/176/220/HD-wallpaper-travel-collage-beige-brown-aesthetic.jpg" alt="Bali Landscape">
+    </section>
+
+    <section id="destinations" class="gallery">
+        <h2>Explore Our Featured Destinations</h2>
+        <div class="gallery-container">
+            <!-- Bali Card -->
+            <div class="card" onclick="window.location.href='bali.html';">
+                <img src="https://media.gettyimages.com/id/1021637528/video/4k-time-lapse-movie-sunrise-scene-of-pura-ulun-danu-bratan-temple-bali-indonesia.jpg?s=640x640&k=20&c=p9UyryVV7wIwkLtIpVVkLQ-XbqmtzSd8pZLipINeFEY=" alt="Bali">
+                <div class="card-content">
+                    <h3>Bali</h3>
+                    <p>Explore Bali’s stunning beaches, lush rice terraces, and tranquil temples, offering a perfect balance of relaxation and adventure for every type of traveler.</p>
+                </div>
+            </div>
+    
+            <!-- Los Angeles Card -->
+            <div class="card" onclick="window.location.href='la.html';">
+                <img src="https://wallpapercave.com/wp/wp1825952.jpg" alt="Los Angeles">
+                <div class="card-content">
+                    <h3>Los Angeles</h3>
+                    <p>From the glitzy streets of Hollywood to the sandy beaches of Santa Monica, Los Angeles offers a perfect blend of entertainment, culture, and sun.</p>
+                </div>
+            </div>
+    
+            <!-- Paris Card -->
+            <div class="card" onclick="window.location.href='paris.html';">
+                <img src="https://images2.alphacoders.com/546/546391.jpg" alt="Paris">
+                <div class="card-content">
+                    <h3>Paris</h3>
+                    <p>Discover Paris, the city of love, with its romantic streets, beautiful parks, and iconic landmarks like the Eiffel Tower, perfect for a cultural escape.</p>
+                </div>
+            </div>
+    
+            <!-- New York Card -->
+            <div class="card" onclick="window.location.href='ny.html';">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREcPLSdBjJl_OO0AvL6UCN8AavVdwm-x9dmw&s" alt="New York">
+                <div class="card-content">
+                    <h3>New York</h3>
+                    <p>Explore the diverse culture of New York with its iconic landmarks, vibrant streets, world-class museums, and unparalleled energy that makes it truly unique.</p>
+                </div>
+            </div>
+    
+            <!-- Greece Card -->
+            <div class="card" onclick="window.location.href='greece.html';">
+                <img src="https://img.freepik.com/free-photo/temple-architecture-from-ancient-greek-civilization_23-2151664694.jpg" alt="Greece">
+                <div class="card-content">
+                    <h3>Greece</h3>
+                    <p>Immerse yourself in Greece's ancient history, from the Acropolis in Athens to the beautiful beaches of Santorini, offering a perfect blend of heritage and natural beauty.</p>
+                </div>
+            </div>
+    
+            <!-- Bora Bora Card -->
+            <div class="card" onclick="window.location.href='bora.html';">
+                <img src="https://c4.wallpaperflare.com/wallpaper/717/474/334/sunset-tropical-sea-beach-bora-bora-bungalows-in-water-pond-coconut-trees-red-sky-clouds-hd-wallpaper-for-desktop-3840%D1%852160-wallpaper-preview.jpg" alt="Bora Bora">
+                <div class="card-content">
+                    <h3>Bora Bora</h3>
+                    <p>Known for its crystal-clear waters and luxury resorts, Bora Bora is the ideal destination for a serene beach vacation, offering privacy and breathtaking views.</p>
+                </div>
+            </div>
+    
+            <!-- Boston Card -->
+            <div class="card" onclick="window.location.href='boston.html';">
+                <img src="https://c4.wallpaperflare.com/wallpaper/119/467/769/city-cityscape-aerial-view-boston-wallpaper-preview.jpg" alt="Boston">
+                <div class="card-content">
+                    <h3>Boston</h3>
+                    <p>Experience the historic charm of Boston with its cobbled streets, renowned universities, and iconic landmarks, making it a vibrant city with rich culture.</p>
+                </div>
+            </div>
+    
+            <!-- Dubai Card -->
+            <div class="card" onclick="window.location.href='Dubai.html';">
+                <img src="https://4kwallpapers.com/images/walls/thumbs/13070.jpg" alt="Dubai">
+                <div class="card-content">
+                    <h3>Dubai</h3>
+                    <p>A city of modern marvels, Dubai boasts towering skyscrapers, stunning beaches, and luxury shopping. Experience the perfect mix of innovation and tradition in this vibrant desert city.</p>
+                </div>
+            </div>
+    
+            <!-- Italy Card -->
+            <div class="card" onclick="window.location.href='italy.html';">
+                <img src="https://media.gettyimages.com/id/1470127261/video/beautiful-landscape-of-a-coastal-fishing-village-city-of-the-cinque-terre-in-riomaggiore.jpg?s=640x640&k=20&c=f_RvF0Bx6SoU10VKzmQX_r9ubBGB_AXvRf9zDurOwT8=" alt="Italy">
+                <div class="card-content">
+                    <h3>Italy</h3>
+                    <p>From the canals of Venice to the art-filled streets of Florence, Italy is a must-see destination for those seeking history, culture, and delicious cuisine.</p>
+                </div>
+            </div>
+    
+            <!-- Germany Card -->
+            <div class="card" onclick="window.location.href='germany.html';">
+                <img src="https://4kwallpapers.com/images/walls/thumbs_2t/13552.jpg" alt="Germany">
+                <div class="card-content">
+                    <h3>Germany</h3>
+                    <p>Germany offers a mix of stunning landscapes, vibrant cities like Berlin, and rich history, with castles, museums, and festivals around every corner.</p>
+                </div>
+            </div>
+    
+            <!-- Finland Card -->
+            <div class="card" onclick="window.location.href='finland.html';">
+                <img src="https://images3.alphacoders.com/111/1118979.jpg" alt="Finland">
+                <div class="card-content">
+                    <h3>Finland</h3>
+                    <p>Finland is known for its serene landscapes, the magical Northern Lights, and vast forests, making it the perfect destination for nature lovers and adventure seekers.</p>
+                </div>
+            </div>
+    
+            <!-- Russia Card -->
+            <div class="card" onclick="window.location.href='russia.html';">
+                <img src="https://images.pexels.com/photos/8285167/pexels-photo-8285167.jpeg?cs=srgb&dl=pexels-67117688-8285167.jpg&fm=jpg" alt="Russia">
+                <div class="card-content">
+                    <h3>Russia</h3>
+                    <p>Russia is a land of contrast, offering stunning cities like St. Petersburg and Moscow, along with vast natural beauty, including Siberian forests and Lake Baikal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+        
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <p>Contact Us: info@travelbuddy.com</p>
+        </div>
+    </footer>
+
+</body>
+</html>
