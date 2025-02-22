@@ -1,0 +1,127 @@
+/* styles.css */
+
+/* Color Palette */
+:root {
+    --primary-blue: #2c3e50;      /* Dark Blue */
+    --secondary-gold: #f39c12;    /* Gold */
+    --neutral-white: #ffffff;     /* White */
+    --neutral-gray: #ecf0f1;      /* Light Gray */
+    --text-dark: #34495e;         /* Dark Text */
+    --accent-blue: #3498db;       /* Accent Blue */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--neutral-gray);
+    background-image: url('../Images/reviewBG.png');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: var(--text-dark); /* Default text color */
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly less transparent */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Refined shadow */
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-blue);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+}
+
+#add-review {
+    margin-top: 30px;
+}
+
+#add-review label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+#add-review input,
+#add-review select,
+#add-review textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #bdc3c7;
+    transition: border-color 0.3s ease;
+    font-family: inherit; /* Inherit font from body */
+}
+
+#add-review input:focus,
+#add-review select:focus,
+#add-review textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Focus shadow */
+}
+
+#add-review button {
+    padding: 10px 20px;
+    background-color: var(--primary-blue);
+    color: var(--neutral-white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
+}
+
+#add-review button:hover {
+    background-color: var(--accent-blue);
+    transform: translateY(-1px); /* Slight lift on hover */
+}
+
+.review {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: var(--neutral-white);
+    border-left: 5px solid var(--secondary-gold); /* Gold accent */
+    font-family: 'Georgia', serif;
+    color: var(--text-dark);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.review:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.review .name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--primary-blue); /* Name in dark blue */
+}
+
+.review .rating {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: var(--secondary-gold); /* Gold stars */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Star shadow */
+}
+
+/* Optional: Add a subtle border to the entire page */
+/* body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    pointer-events: none;
+} */
