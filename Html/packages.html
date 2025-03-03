@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Book your dream vacation with our exclusive travel packages." />
+    <meta name="keywords" content="travel, vacation, packages, booking, tours" />
+    <meta name="author" content="Travel Agency" />
+    <title>Travel Packages - Book Your Dream Vacation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="https://example.com/favicon.png" />
+    <style>
+      :root {
+        --primary: #3c3d37;
+        --secondary: #697565;
+        --accent: #e67e22;
+        --bg: #ecdfcc;
+        --text: #181c14;
+        --light: #ecdfcc;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .header {
+        background-color: var(--primary);
+        color: var(--light);
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+      }
+
+      nav a {
+        color: var(--light);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      nav a:hover {
+        color: var(--accent);
+      }
+
+      #hero {
+        background: url('https://via.placeholder.com/1200x400') no-repeat center center/cover;
+        color: var(--light);
+        padding: 100px 20px;
+        text-align: center;
+      }
+
+      #hero h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #ff5733; /* Orange color */
+      }
+
+      #hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #ffffff; /* White color */
+      }
+
+      section {
+        padding: 40px 20px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin-bottom: 30px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border: 1px solid var(--secondary);
+      }
+
+      th, td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid var(--secondary);
+      }
+
+      th {
+        background-color: var(--primary);
+        color: var(--light);
+      }
+
+      tr:nth-child(even) {
+        background-color: rgba(105, 117, 101, 0.1);
+      }
+
+      tr:hover {
+        background-color: rgba(230, 126, 34, 0.1);
+        cursor: pointer;
+        transform: scale(1.02);
+        transition: transform 0.3s ease;
+      }
+
+      .btn {
+        background-color: var(--accent);
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        display: inline-block;
+        transition: all 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #d35400;
+        transform: scale(1.05);
+      }
+
+      .video-container, .map-container {
+        width: 100%;
+        margin-bottom: 30px;
+        position: relative;
+      }
+
+      .responsive-iframe {
+        width: 100%;
+        height: 400px;
+        border: none;
+        border-radius: 8px;
+        display: block;
+      }
+
+      footer {
+        background-color: var(--primary);
+        color: var(--light);
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      footer .social-links {
+        margin-top: 10px;
+      }
+
+      footer .social-links a {
+        color: var(--light);
+        margin: 0 10px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      footer .social-links a:hover {
+        color: var(--accent);
+      }
+
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      form input, form textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      form input:focus, form textarea:focus {
+        border-color: var(--accent);
+        outline: none;
+        box-shadow: 0 0 5px rgba(230, 126, 34, 0.5);
+      }
+
+      #back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+        }
+
+        nav ul {
+          flex-wrap: wrap;
+          justify-content: center;
+          margin-top: 15px;
+        }
+
+        th, td {
+          padding: 10px;
+          font-size: 0.9rem;
+        }
+
+        .responsive-iframe {
+          height: 300px;
+        }
+
+        #hero h1 {
+          font-size: 2rem;
+        }
+
+        #hero p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">Travel</div>
+      <nav>
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#guide">Guide</a></li>
+          <li><a href="#locations">Locations</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="hero">
+      <div class="container">
+        <h1>Your Dream Vacation Awaits</h1>
+        <p>Explore the world with our exclusive travel packages.</p>
+        <a href="#packages" class="btn">View Packages</a>
+      </div>
+    </section>
+
+    <section id="packages">
+      <div class="container">
+        <h2>All Travel Packages</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Country</th>
+                <th>Package Type</th>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bali</td>
+                <td>Luxury</td>
+                <td>7 Days, 6 Nights</td>
+                <td>$1,500</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Italy</td>
+                <td>Romantic</td>
+                <td>10 Days, 9 Nights</td>
+                <td>$2,200</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Los Angeles</td>
+                <td>Adventure</td>
+                <td>5 Days, 4 Nights</td>
+                <td>$1,800</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>New York</td>
+                <td>City Tour</td>
+                <td>6 Days, 5 Nights</td>
+                <td>$2,000</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Paris</td>
+                <td>Honeymoon</td>
+                <td>7 Days, 6 Nights</td>
+                <td>$2,500</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Greece</td>
+                <td>Historical</td>
+                <td>8 Days, 7 Nights</td>
+                <td>$2,300</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Bora Bora</td>
+                <td>Beach Retreat</td>
+                <td>6 Days, 5 Nights</td>
+                <td>$2,700</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Boston</td>
+                <td>Cultural</td>
+                <td>4 Days, 3 Nights</td>
+                <td>$1,400</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Germany</td>
+                <td>European Tour</td>
+                <td>9 Days, 8 Nights</td>
+                <td>$2,800</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Finland</td>
+                <td>Nature Escape</td>
+                <td>7 Days, 6 Nights</td>
+                <td>$2,100</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Russia</td>
+                <td>Exploration</td>
+                <td>10 Days, 9 Nights</td>
+                <td>$3,000</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+              <tr>
+                <td>Switzerland</td>
+                <td>Luxury</td>
+                <td>7 Days, 6 Nights</td>
+                <td>$3,500</td>
+                <td><a href="#" class="btn">Book Now</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="guide">
+      <div class="container">
+        <h2>Watch Our Travel Guide</h2>
+        <div class="video-container">
+          <iframe
+            class="responsive-iframe"
+            src="https://www.youtube.com/embed/l64YvbY9NB8"
+            title="Travel Guide Video"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="locations">
+      <div class="container">
+        <h2>Find Us on the Map</h2>
+        <div class="map-container">
+          <iframe
+            class="responsive-iframe"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83998.95410688759!2d2.2769956079233285!3d48.85883052162533!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e1f06e2b70f%3A0x40b82c3688c9460!2sParis%2C%20France!5e0!3m2!1sen!2sus!4v1646016817267!5m2!1sen!2sus"
+            title="Our Location Map"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2>Contact Us for Booking</h2>
+        <form>
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message" rows="4" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Travel Agency. All Rights Reserved.</p>
+      <p>Email: info@travelagency.com | Phone: +1 (555) 123-4567</p>
+      <div class="social-links">
+        <a href="https://facebook.com" target="_blank">Facebook</a>
+        <a href="https://twitter.com" target="_blank">Twitter</a>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+      </div>
+    </footer>
+
+    <button id="back-to-top" class="btn">↑ Back to Top</button>
+
+    <script>
+      const backToTopButton = document.getElementById('back-to-top');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          backToTopButton.style.display = 'block';
+        } else {
+          backToTopButton.style.display = 'none';
+        }
+      });
+
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      const form = document.querySelector('form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for contacting us! We will get back to you soon.');
+        form.reset();
+      });
+    </script>
+  </body>
+</html>

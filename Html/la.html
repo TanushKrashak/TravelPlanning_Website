@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Los Angeles Travel Package - Plan Your Perfect Trip</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ECDFCC; /* Beige */
+            color: #3C3D37; /* Dark Grey */
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background-color: #181C14; /* Deep Black-Green */
+            color: #ECDFCC; /* Beige */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .header .logo {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #ECDFCC; /* Beige */
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #697565; /* Teal-Green */
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            color: #ECDFCC; /* Beige */
+            padding: 120px 0;
+            text-align: center;
+            background-color: #181C14; /* Deep Black-Green */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #697565; /* Teal-Green */
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: #ECDFCC; /* Beige */
+            margin-top: 10px;
+            line-height: 1.8;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* Text shadow for visibility */
+        }
+
+        /* Package Details Section */
+        .package-details {
+            padding: 50px 0;
+            background-color: #ECDFCC; /* Beige */
+        }
+
+        .package-details h2 {
+            font-size: 2.5rem;
+            color: #181C14; /* Deep Black-Green */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .package-details .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .package-details .overview p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-top: 10px;
+            color: #697565; /* Teal-Green */
+        }
+
+        /* Itinerary Section */
+        .itinerary {
+            margin-top: 40px;
+        }
+
+        .itinerary h2 {
+            font-size: 2.5rem;
+            color: #697565; /* Teal-Green */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .itinerary .day {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #3C3D37; /* Dark Grey */
+            border-left: 5px solid #697565; /* Teal-Green border */
+            border-radius: 8px;
+        }
+
+        .itinerary .day h3 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ECDFCC; /* Beige */
+        }
+
+        .itinerary .day p {
+            font-size: 1rem;
+            margin-top: 10px;
+            line-height: 1.6;
+            color: #ECDFCC; /* Beige (same color for text of all days) */
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background-color: #697565; /* Teal-Green */
+            padding: 30px 0;
+            color: #ECDFCC; /* Beige */
+            text-align: center;
+        }
+
+        .pricing p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .pricing strong {
+            font-size: 1.8rem;
+            color: #ECDFCC; /* Beige */
+        }
+
+        /* Call to Action Section */
+        .cta {
+            text-align: center;
+            margin-top: 50px;
+            padding: 50px 20px;
+            background-color: #697565; /* Teal-Green */
+            color: #ECDFCC; /* Beige */
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            color: #ECDFCC; /* Beige */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .cta .btn {
+            background-color: #ECDFCC; /* Beige */
+            color: #181C14; /* Deep Black-Green */
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .cta .btn:hover {
+            background-color: #697565; /* Teal-Green */
+            color: white;
+        }
+
+        /* Footer Section */
+        .footer {
+            background-color: #181C14; /* Deep Black-Green */
+            color: #ECDFCC; /* Beige */
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-content p {
+            font-size: 1rem;
+        }
+
+        .footer-content a {
+            color: #ECDFCC; /* Beige */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .package-details .container {
+                width: 95%;
+            }
+
+            .itinerary .day {
+                padding: 15px;
+            }
+
+            .pricing strong {
+                font-size: 1.5rem;
+            }
+
+            .cta h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">Travel</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#destinations">Book</a></li>
+                <li><a href="packages.html">Packages</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#review">Review</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section: Cover Image with Heading -->
+    <section id="home" class="hero">
+        <h1>Los Angeles Travel Package</h1>
+        <p>Explore the vibrant city of Los Angeles, from Hollywood glamour to beautiful beaches!</p>
+    </section>
+
+    <!-- Travel Package Details Section -->
+    <section id="package-details" class="package-details">
+        <div class="container">
+            <!-- Travel Plan Overview -->
+            <div class="overview">
+                <h2>Package Overview</h2>
+                <p>This exciting 7-day adventure takes you through the best of Los Angeles, including Hollywood, Santa Monica, Venice Beach, and more. A perfect combination of entertainment, culture, and relaxation.</p>
+            </div>
+
+            <!-- Itinerary Section -->
+            <div class="itinerary">
+                <h2>Itinerary</h2>
+                <div class="day">
+                    <h3>Day 1: Arrival in Los Angeles</h3>
+                    <p>Arrive at LAX Airport, Los Angeles. Transfer to your hotel and unwind. Evening at leisure, with optional dinner at a local restaurant.</p>
+                </div>
+                <div class="day">
+                    <h3>Day 2: Hollywood Tour</h3>
+                    <p>Tour the Hollywood Walk of Fame, see the TCL Chinese Theatre, and visit the iconic Hollywood Sign. Enjoy lunch at a local café.</p>
+                </div>
+                <div class="day">
+                    <h3>Day 3: Venice Beach & Santa Monica Pier</h3>
+                    <p>Spend a day exploring Venice Beach's boardwalk, then head to Santa Monica Pier for a relaxing evening by the ocean.</p>
+                </div>
+                <div class="day">
+                    <h3>Day 4: Beverly Hills & Rodeo Drive</h3>
+                    <p>Explore the upscale neighborhood of Beverly Hills. Walk along Rodeo Drive and shop in the world's most glamorous retail district.</p>
+                </div>
+                <div class="day">
+                    <h3>Day 5: Griffith Observatory & Sunset Blvd</h3>
+                    <p>Visit Griffith Observatory for breathtaking views of the city. Drive down Sunset Blvd and experience LA’s legendary nightlife.</p>
+                </div>
+                <div class="day">
+                    <h3>Day 6: Malibu & Pacific Coast Highway</h3>
+                    <p>Take a scenic drive along the Pacific Coast Highway to Malibu. Relax on the sandy beaches and enjoy lunch with ocean views.</p>
+                </div>
+                <div class="day">
+                    <h3>Day 7: Departure</h3>
+                    <p>After breakfast, check out and transfer to LAX for your return flight home, with memories of your LA adventure!</p>
+                </div>
+            </div>
+
+            <!-- Package Pricing -->
+            <div class="pricing">
+                <h2>Pricing</h2>
+                <p><strong>Standard Package</strong>: $2,199 per person</p>
+                <p><strong>Premium Package</strong>: $3,199 per person (includes luxury hotel, private guided tours)</p>
+            </div>
+
+            <!-- Call to Action: Book Now -->
+            <div class="cta">
+                <h2>Ready to Explore Los Angeles?</h2>
+                <p>Book your Los Angeles adventure today and experience the excitement of the City of Angels. Limited spots available!</p>
+                <br>
+                <a href="#book-now" class="btn">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <p>Contact Us: <a href="mailto:info@travelbuddy.com">info@travelbuddy.com</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
