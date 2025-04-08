@@ -4,8 +4,120 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Travel Planner - Customer Reviews</title>
-    <link rel="stylesheet" href="../Css/review.css"> <!-- Link to your external CSS file -->
+<style>
+:root {
+    --primary-blue: #2c3e50;
+    --secondary-gold: #f39c12;
+    --neutral-white: #ffffff;
+    --neutral-gray: #ecf0f1;
+    --text-dark: #34495e;
+    --accent-blue: #3498db;
+}
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--neutral-gray);
+    background-image: url('../Images/reviewBG.png');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-blue);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#add-review {
+    margin-top: 30px;
+}
+
+#add-review label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+#add-review input,
+#add-review select,
+#add-review textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #bdc3c7;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+}
+
+#add-review input:focus,
+#add-review select:focus,
+#add-review textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#add-review button {
+    padding: 10px 20px;
+    background-color: var(--primary-blue);
+    color: var(--neutral-white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#add-review button:hover {
+    background-color: var(--accent-blue);
+    transform: translateY(-1px);
+}
+
+.review {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: var(--neutral-white);
+    border-left: 5px solid var(--secondary-gold);
+    font-family: 'Georgia', serif;
+    color: var(--text-dark);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.review:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.review .name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--primary-blue);
+}
+
+.review .rating {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: var(--secondary-gold);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+</style>
 </head>
 <body>
 <div class="container">
@@ -48,26 +160,20 @@ function addReview() {
     var name = document.getElementById("name").value;
     var rating = document.getElementById("rating").value;
     var reviewText = document.getElementById("review").value;
-   
     var reviewContainer = document.getElementById("reviews-container");
     var reviewDiv = document.createElement("div");
     reviewDiv.classList.add("review");
-   
     var namePara = document.createElement("p");
     namePara.classList.add("name");
     namePara.innerText = name;
-   
     var ratingPara = document.createElement("p");
     ratingPara.classList.add("rating");
     ratingPara.innerHTML = "&#9733;".repeat(parseInt(rating)) + "&#9734;".repeat(5 - parseInt(rating));
-   
     var reviewPara = document.createElement("p");
     reviewPara.innerText = reviewText;
-   
     reviewDiv.appendChild(namePara);
     reviewDiv.appendChild(ratingPara);
     reviewDiv.appendChild(reviewPara);
-   
     reviewContainer.appendChild(reviewDiv);
 }
 </script>
