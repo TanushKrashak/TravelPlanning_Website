@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Buddy - Admin Dashboard</title>
+    <style>
+        :root {
+            --primary: #3c3d37;
+            --secondary: #697565;
+            --accent: #f39c12;
+            --bg: #ecdfcc;
+            --text: #181c14;
+            --light: #ffffff;
+            --border: #ddd;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        nav {
+            background-color: var(--light);
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        nav ul li {
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover, 
+        nav ul li a.active {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        .card {
+            background-color: var(--light);
+            border-radius: 5px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: var(--secondary);
+            color: var(--light);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: var(--light);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .stat-card .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .stat-card .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th, 
+        table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        table th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        table tr:hover {
+            background-color: rgba(105, 117, 101, 0.05);
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+        }
+        
+        .status-warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--light);
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+        }
+        
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 0.8rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .error-message {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .search-form {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-form input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Travel Buddy Admin Dashboard</h1>
+            <div>
+                <a href="home.html" class="btn">Back to Website</a>
+            </div>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#" class="tab-link active" data-tab="dashboard">Dashboard</a></li>
+                <li><a href="#" class="tab-link" data-tab="bookings">Bookings</a></li>
+                <li><a href="#" class="tab-link" data-tab="reviews">Reviews</a></li>
+                <li><a href="#" class="tab-link" data-tab="destinations">Destinations</a></li>
+                <li><a href="#" class="tab-link" data-tab="packages">Packages</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Dashboard Overview Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Total Bookings</h3>
+                    <div class="stat-value" id="total-bookings">--</div>
+                    <div class="stat-label">All time</div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Total Reviews</h3>
+                    <div class="stat-value" id="total-reviews">--</div>
+                    <div class="stat-label">Across all destinations</div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Destinations</h3>
+                    <div class="stat-value" id="total-destinations">--</div>
+                    <div class="stat-label">Available for booking</div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Average Rating</h3>
+                    <div class="stat-value" id="average-rating">--</div>
+                    <div class="stat-label">Based on all reviews</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Recent Bookings</h2>
+                    <a href="#" class="btn btn-sm tab-link" data-tab="bookings">View All</a>
+                </div>
+                <div class="card-body">
+                    <table id="recent-bookings-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Destination</th>
+                                <th>Travel Date</th>
+                                <th>Guests</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="loading">Loading recent bookings...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Recent Reviews</h2>
+                    <a href="#" class="btn btn-sm tab-link" data-tab="reviews">View All</a>
+                </div>
+                <div class="card-body">
+                    <table id="recent-reviews-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Destination</th>
+                                <th>Rating</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" class="loading">Loading recent reviews...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bookings Tab -->
+        <div id="bookings" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>All Bookings</h2>
+                </div>
+                <div class="card-body">
+                    <div class="search-form">
+                        <input type="email" id="booking-search" placeholder="Search by email...">
+                        <button class="btn" id="booking-search-btn">Search</button>
+                        <button class="btn" id="add-new-booking-btn" style="margin-left: 10px;">Add New Booking</button>
+                    </div>
+                    
+                    <table id="all-bookings-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Destination</th>
+                                <th>Travel Date</th>
+                                <th>Guests</th>
+                                <th>Total</th>
+                                <th>Booking Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="9" class="loading">Loading bookings...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Add New Booking Modal -->
+            <div id="add-booking-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background-color: white; width: 80%; max-width: 600px; margin: 50px auto; padding: 20px; border-radius: 5px;">
+                    <h2>Add New Booking</h2>
+                    <form id="add-booking-form">
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-booking-name">Customer Name:</label>
+                            <input type="text" id="new-booking-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-booking-email">Email:</label>
+                            <input type="email" id="new-booking-email" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-booking-package">Package:</label>
+                            <select id="new-booking-package" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <option value="">Select Package</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-booking-travel-date">Travel Date:</label>
+                            <input type="date" id="new-booking-travel-date" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-booking-guests">Number of Guests:</label>
+                            <input type="number" id="new-booking-guests" min="1" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="submit" class="btn">Add Booking</button>
+                            <button type="button" class="btn" style="background-color: var(--danger);" id="close-add-booking-modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Edit Booking Modal -->
+            <div id="edit-booking-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background-color: white; width: 80%; max-width: 600px; margin: 50px auto; padding: 20px; border-radius: 5px;">
+                    <h2>Edit Booking</h2>
+                    <form id="edit-booking-form">
+                        <input type="hidden" id="edit-booking-id">
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-booking-name">Customer Name:</label>
+                            <input type="text" id="edit-booking-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-booking-email">Email:</label>
+                            <input type="email" id="edit-booking-email" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-booking-package">Package:</label>
+                            <select id="edit-booking-package" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <option value="">Select Package</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-booking-travel-date">Travel Date:</label>
+                            <input type="date" id="edit-booking-travel-date" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-booking-guests">Number of Guests:</label>
+                            <input type="number" id="edit-booking-guests" min="1" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="submit" class="btn">Save Changes</button>
+                            <button type="button" class="btn" style="background-color: var(--danger);" id="close-edit-booking-modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reviews Tab -->
+        <div id="reviews" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>All Reviews</h2>
+                    <button class="btn btn-sm" id="add-new-review-btn">Add New Review</button>
+                </div>
+                <div class="card-body">
+                    <table id="all-reviews-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Destination</th>
+                                <th>Rating</th>
+                                <th>Comment</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7" class="loading">Loading reviews...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Add New Review Modal -->
+            <div id="add-review-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background-color: white; width: 80%; max-width: 600px; margin: 50px auto; padding: 20px; border-radius: 5px;">
+                    <h2>Add New Review</h2>
+                    <form id="add-review-form">
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-review-name">Customer Name:</label>
+                            <input type="text" id="new-review-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-review-email">Email:</label>
+                            <input type="email" id="new-review-email" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-review-destination">Destination:</label>
+                            <select id="new-review-destination" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <option value="">Select Destination</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-review-rating">Rating (1-5):</label>
+                            <select id="new-review-rating" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <option value="">Select Rating</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="1">1 - Poor</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="new-review-comment">Comment:</label>
+                            <textarea id="new-review-comment" rows="3" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="submit" class="btn">Add Review</button>
+                            <button type="button" class="btn" style="background-color: var(--danger);" id="close-add-review-modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Edit Review Modal -->
+            <div id="edit-review-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background-color: white; width: 80%; max-width: 600px; margin: 50px auto; padding: 20px; border-radius: 5px;">
+                    <h2>Edit Review</h2>
+                    <form id="edit-review-form">
+                        <input type="hidden" id="edit-review-id">
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-review-name">Customer Name:</label>
+                            <input type="text" id="edit-review-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-review-email">Email:</label>
+                            <input type="email" id="edit-review-email" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-review-destination">Destination:</label>
+                            <select id="edit-review-destination" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <option value="">Select Destination</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-review-rating">Rating (1-5):</label>
+                            <select id="edit-review-rating" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <option value="">Select Rating</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="1">1 - Poor</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-review-comment">Comment:</label>
+                            <textarea id="edit-review-comment" rows="3" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="submit" class="btn">Save Changes</button>
+                            <button type="button" class="btn" style="background-color: var(--danger);" id="close-edit-review-modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Destinations Tab -->
+        <div id="destinations" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>All Destinations</h2>
+                </div>
+                <div class="card-body">
+                    <table id="all-destinations-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Country</th>
+                                <th>Packages</th>
+                                <th>Avg. Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" class="loading">Loading destinations...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Add New Destination -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Add New Destination</h2>
+                </div>
+                <div class="card-body">
+                    <form id="add-destination-form">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                            <div>
+                                <label for="new-dest-name">Destination Name:</label>
+                                <input type="text" id="new-dest-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                            </div>
+                            <div>
+                                <label for="new-dest-country">Country:</label>
+                                <input type="text" id="new-dest-country" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                            </div>
+                            <div>
+                                <label for="new-dest-description">Description:</label>
+                                <textarea id="new-dest-description" rows="3" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                            </div>
+                            <div>
+                                <label for="new-dest-image">Image URL:</label>
+                                <input type="text" id="new-dest-image" style="width: 100%; padding: 8px; margin-top: 5px;">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Add Destination</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Edit Destination Modal -->
+            <div id="edit-destination-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background-color: white; width: 80%; max-width: 600px; margin: 50px auto; padding: 20px; border-radius: 5px;">
+                    <h2>Edit Destination</h2>
+                    <form id="edit-destination-form">
+                        <input type="hidden" id="edit-dest-id">
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-dest-name">Destination Name:</label>
+                            <input type="text" id="edit-dest-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-dest-country">Country:</label>
+                            <input type="text" id="edit-dest-country" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-dest-description">Description:</label>
+                            <textarea id="edit-dest-description" rows="3" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-dest-image">Image URL:</label>
+                            <input type="text" id="edit-dest-image" style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="submit" class="btn">Save Changes</button>
+                            <button type="button" class="btn" style="background-color: var(--danger);" id="close-edit-dest-modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Packages Tab -->
+        <div id="packages" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>All Packages</h2>
+                </div>
+                <div class="card-body">
+                    <table id="all-packages-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Package Name</th>
+                                <th>Destination</th>
+                                <th>Duration</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="loading">Loading packages...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Add New Package -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Add New Package</h2>
+                </div>
+                <div class="card-body">
+                    <form id="add-package-form">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                            <div>
+                                <label for="new-package-name">Package Name:</label>
+                                <input type="text" id="new-package-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                            </div>
+                            <div>
+                                <label for="new-package-destination">Destination:</label>
+                                <select id="new-package-destination" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                    <option value="">Select Destination</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="new-package-duration">Duration (days):</label>
+                                <input type="number" id="new-package-duration" min="1" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                            </div>
+                            <div>
+                                <label for="new-package-price">Price ($):</label>
+                                <input type="number" id="new-package-price" min="0" step="0.01" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                            </div>
+                            <div>
+                                <label for="new-package-description">Description:</label>
+                                <textarea id="new-package-description" rows="3" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                            </div>
+                            <div>
+                                <label for="new-package-image">Image URL:</label>
+                                <input type="text" id="new-package-image" style="width: 100%; padding: 8px; margin-top: 5px;">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Add Package</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Edit Package Modal -->
+            <div id="edit-package-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                <div style="background-color: white; width: 80%; max-width: 600px; margin: 50px auto; padding: 20px; border-radius: 5px;">
+                    <h2>Edit Package</h2>
+                    <form id="edit-package-form">
+                        <input type="hidden" id="edit-package-id">
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-package-name">Package Name:</label>
+                            <input type="text" id="edit-package-name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-package-destination">Destination:</label>
+                            <select id="edit-package-destination" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                                <option value="">Select Destination</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-package-duration">Duration (days):</label>
+                            <input type="number" id="edit-package-duration" min="1" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-package-price">Price ($):</label>
+                            <input type="number" id="edit-package-price" min="0" step="0.01" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-package-description">Description:</label>
+                            <textarea id="edit-package-description" rows="3" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="edit-package-image">Image URL:</label>
+                            <input type="text" id="edit-package-image" style="width: 100%; padding: 8px; margin-top: 5px;">
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="submit" class="btn">Save Changes</button>
+                            <button type="button" class="btn" style="background-color: var(--danger);" id="close-edit-package-modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 Travel Buddy Admin Panel</p>
+        </div>
+    </div>
+    
+    <script>
+    // Global data container
+    const data = {
+        destinations: [],
+        bookings: [],
+        packages: [],
+        reviews: []
+    };
+
+    // Initialize the dashboard
+    async function initDashboard() {
+        try {
+            // First load destinations
+            await loadDestinations();
+            
+            // Then load packages
+            await loadPackages();
+            
+            // Then load reviews
+            await loadReviews();
+            
+            // Finally load bookings
+            await loadBookings();
+            
+            // Update UI with loaded data
+            updateDashboard();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+        } catch (error) {
+            console.error('Error initializing dashboard:', error);
+            showError('Failed to load dashboard data. Please try refreshing the page.');
+        }
+    }
+    
+    // Show error message
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        document.querySelector('.dashboard').prepend(errorDiv);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+    }
+    
+    // Update all UI elements with loaded data
+    function updateDashboard() {
+        updateStats();
+        updateRecentBookingsTable();
+        updateRecentReviewsTable();
+        updateAllBookingsTable();
+        updateAllReviewsTable();
+        updateDestinationsTable();
+        updatePackagesTable();
+        populateDestinationDropdowns();
+        populatePackageDropdowns();
+        populateReviewDestinationDropdowns();
+    }
+    
+    // Update dashboard statistics
+    function updateStats() {
+        document.getElementById('total-bookings').textContent = data.bookings.length;
+        document.getElementById('total-reviews').textContent = data.reviews.length;
+        document.getElementById('total-destinations').textContent = data.destinations.length;
+        
+        // Calculate average rating
+        if (data.reviews.length > 0) {
+            const totalRating = data.reviews.reduce((sum, review) => sum + review.rating, 0);
+            const avgRating = (totalRating / data.reviews.length).toFixed(1);
+            document.getElementById('average-rating').textContent = avgRating;
+        } else {
+            document.getElementById('average-rating').textContent = 'N/A';
+        }
+    }
+    
+    // Load destinations from API
+    async function loadDestinations() {
+        try {
+            const response = await fetch('/api/destinations');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            data.destinations = await response.json();
+        } catch (error) {
+            console.error('Error loading destinations:', error);
+            throw error;
+        }
+    }
+    
+    // Load packages from API
+    async function loadPackages() {
+        try {
+            const response = await fetch('/api/packages');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            data.packages = await response.json();
+        } catch (error) {
+            console.error('Error loading packages:', error);
+            throw error;
+        }
+    }
+    
+    // Load reviews from API
+    async function loadReviews() {
+        try {
+            const response = await fetch('/api/reviews');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            let reviews = await response.json();
+            
+            // Add destination name to each review
+            reviews = reviews.map(review => {
+                const destination = data.destinations.find(d => d.id === review.destination_id);
+                return {
+                    ...review,
+                    destination_name: destination ? destination.name : 'Unknown'
+                };
+            });
+            
+            data.reviews = reviews;
+        } catch (error) {
+            console.error('Error loading reviews:', error);
+            throw error;
+        }
+    }
+    
+    // Load bookings from API
+    async function loadBookings() {
+        try {
+            const response = await fetch('/api/bookings');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            let bookings = await response.json();
+            
+            // Add destination name to each booking
+            bookings = bookings.map(booking => {
+                const package = data.packages.find(p => p.id === booking.package_id);
+                const destination = package ? 
+                    data.destinations.find(d => d.id === package.destination_id) : null;
+                
+                return {
+                    ...booking,
+                    destination_name: destination ? destination.name : 'Unknown'
+                };
+            });
+            
+            data.bookings = bookings;
+        } catch (error) {
+            console.error('Error loading bookings:', error);
+            throw error;
+        }
+    }
+    
+    // Update recent bookings table
+    function updateRecentBookingsTable() {
+        const tableBody = document.getElementById('recent-bookings-table').querySelector('tbody');
+        
+        if (data.bookings.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6">No bookings found</td></tr>';
+            return;
+        }
+        
+        // Show only 5 most recent bookings
+        const recentBookings = [...data.bookings]
+            .sort((a, b) => new Date(b.booking_date) - new Date(a.booking_date))
+            .slice(0, 5);
+        
+        tableBody.innerHTML = '';
+        
+        recentBookings.forEach(booking => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${booking.id}</td>
+                <td>${booking.name}</td>
+                <td>${booking.destination_name}</td>
+                <td>${formatDate(booking.travel_date)}</td>
+                <td>${booking.guests}</td>
+                <td>${formatCurrency(booking.total_price)}</td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+    
+    // Update recent reviews table
+    function updateRecentReviewsTable() {
+        const tableBody = document.getElementById('recent-reviews-table').querySelector('tbody');
+        
+        if (data.reviews.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="5">No reviews found</td></tr>';
+            return;
+        }
+        
+        // Show only 5 most recent reviews
+        const recentReviews = [...data.reviews]
+            .sort((a, b) => new Date(b.review_date) - new Date(a.review_date))
+            .slice(0, 5);
+        
+        tableBody.innerHTML = '';
+        
+        recentReviews.forEach(review => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${review.id}</td>
+                <td>${review.name}</td>
+                <td>${review.destination_name}</td>
+                <td>${generateStars(review.rating)}</td>
+                <td>${formatDate(review.review_date)}</td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+    
+    // Update all bookings table
+    function updateAllBookingsTable() {
+        const tableBody = document.getElementById('all-bookings-table').querySelector('tbody');
+        
+        if (data.bookings.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="9">No bookings found</td></tr>';
+            return;
+        }
+        
+        // Sort bookings by date (newest first)
+        const sortedBookings = [...data.bookings]
+            .sort((a, b) => new Date(b.booking_date) - new Date(a.booking_date));
+        
+        tableBody.innerHTML = '';
+        
+        sortedBookings.forEach(booking => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${booking.id}</td>
+                <td>${booking.name}</td>
+                <td>${booking.email}</td>
+                <td>${booking.destination_name}</td>
+                <td>${formatDate(booking.travel_date)}</td>
+                <td>${booking.guests}</td>
+                <td>${formatCurrency(booking.total_price)}</td>
+                <td>${formatDate(booking.booking_date)}</td>
+                <td>
+                    <button class="btn btn-sm edit-booking" data-id="${booking.id}">Edit</button>
+                    <button class="btn btn-sm" style="background-color: var(--danger);" onclick="deleteBooking(${booking.id})">Delete</button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        // Add event listeners to edit buttons
+        document.querySelectorAll('.edit-booking').forEach(button => {
+            button.addEventListener('click', function() {
+                const bookingId = parseInt(this.getAttribute('data-id'));
+                openEditBookingModal(bookingId);
+            });
+        });
+    }
+    
+    // Update all reviews table
+    function updateAllReviewsTable() {
+        const tableBody = document.getElementById('all-reviews-table').querySelector('tbody');
+        
+        if (data.reviews.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="7">No reviews found</td></tr>';
+            return;
+        }
+        
+        // Sort reviews by date (newest first)
+        const sortedReviews = [...data.reviews]
+            .sort((a, b) => new Date(b.review_date) - new Date(a.review_date));
+        
+        tableBody.innerHTML = '';
+        
+        sortedReviews.forEach(review => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${review.id}</td>
+                <td>${review.name}</td>
+                <td>${review.destination_name}</td>
+                <td>${generateStars(review.rating)}</td>
+                <td>${review.comment}</td>
+                <td>${formatDate(review.review_date)}</td>
+                <td>
+                    <button class="btn btn-sm edit-review" data-id="${review.id}">Edit</button>
+                    <button class="btn btn-sm" style="background-color: var(--danger);" onclick="deleteReview(${review.id})">Delete</button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        // Add event listeners to edit buttons
+        document.querySelectorAll('.edit-review').forEach(button => {
+            button.addEventListener('click', function() {
+                const reviewId = parseInt(this.getAttribute('data-id'));
+                openEditReviewModal(reviewId);
+            });
+        });
+    }
+    
+    // Update destinations table
+    function updateDestinationsTable() {
+        const tableBody = document.getElementById('all-destinations-table').querySelector('tbody');
+        
+        if (data.destinations.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="5">No destinations found</td></tr>';
+            return;
+        }
+        
+        tableBody.innerHTML = '';
+        
+        data.destinations.forEach(destination => {
+            // Calculate average rating for destination
+            const destinationReviews = data.reviews.filter(review => 
+                review.destination_id === destination.id
+            );
+            
+            let avgRating = 'No reviews';
+            if (destinationReviews.length > 0) {
+                const totalRating = destinationReviews.reduce((sum, review) => sum + review.rating, 0);
+                avgRating = (totalRating / destinationReviews.length).toFixed(1) + ' ★';
+            }
+            
+            // Count packages for this destination
+            const packagesCount = data.packages.filter(pkg => 
+                pkg.destination_id === destination.id
+            ).length;
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${destination.id}</td>
+                <td>${destination.name}</td>
+                <td>${destination.country || 'N/A'}</td>
+                <td>${packagesCount}</td>
+                <td>${avgRating}</td>
+                <td>
+                    <button class="btn btn-sm edit-destination" data-id="${destination.id}">Edit</button>
+                    <button class="btn btn-sm" style="background-color: var(--danger);" onclick="deleteDestination(${destination.id})">Delete</button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        // Add event listeners to edit buttons
+        document.querySelectorAll('.edit-destination').forEach(button => {
+            button.addEventListener('click', function() {
+                const destinationId = parseInt(this.getAttribute('data-id'));
+                openEditDestinationModal(destinationId);
+            });
+        });
+    }
+    
+    // Update packages table
+    function updatePackagesTable() {
+        const tableBody = document.getElementById('all-packages-table').querySelector('tbody');
+        
+        if (data.packages.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6">No packages found</td></tr>';
+            return;
+        }
+        
+        tableBody.innerHTML = '';
+        
+        data.packages.forEach(package => {
+            // Find destination name
+            const destination = data.destinations.find(d => d.id === package.destination_id);
+            const destinationName = destination ? destination.name : 'Unknown';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${package.id}</td>
+                <td>${package.name}</td>
+                <td>${destinationName}</td>
+                <td>${package.duration} days</td>
+                <td>${formatCurrency(package.price)}</td>
+                <td>
+                    <button class="btn btn-sm edit-package" data-id="${package.id}">Edit</button>
+                    <button class="btn btn-sm" style="background-color: var(--danger);" onclick="deletePackage(${package.id})">Delete</button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        // Add event listeners to edit buttons
+        document.querySelectorAll('.edit-package').forEach(button => {
+            button.addEventListener('click', function() {
+                const packageId = parseInt(this.getAttribute('data-id'));
+                openEditPackageModal(packageId);
+            });
+        });
+    }
+    
+    // Populate destination dropdowns in package forms
+    function populateDestinationDropdowns() {
+        const newPackageDestination = document.getElementById('new-package-destination');
+        const editPackageDestination = document.getElementById('edit-package-destination');
+        
+        // Clear existing options (except the first one in edit dropdown)
+        newPackageDestination.innerHTML = '<option value="">Select Destination</option>';
+        editPackageDestination.innerHTML = '<option value="">Select Destination</option>';
+        
+        // Add options for each destination
+        data.destinations.forEach(destination => {
+            const newOption = document.createElement('option');
+            newOption.value = destination.id;
+            newOption.textContent = destination.name;
+            
+            const editOption = document.createElement('option');
+            editOption.value = destination.id;
+            editOption.textContent = destination.name;
+            
+            newPackageDestination.appendChild(newOption);
+            editPackageDestination.appendChild(editOption);
+        });
+    }
+    
+    // Open edit destination modal
+    function openEditDestinationModal(destinationId) {
+        const destination = data.destinations.find(d => d.id === destinationId);
+        if (!destination) return;
+        
+        document.getElementById('edit-dest-id').value = destination.id;
+        document.getElementById('edit-dest-name').value = destination.name || '';
+        document.getElementById('edit-dest-country').value = destination.country || '';
+        document.getElementById('edit-dest-description').value = destination.description || '';
+        document.getElementById('edit-dest-image').value = destination.image_url || '';
+        
+        document.getElementById('edit-destination-modal').style.display = 'block';
+    }
+    
+    // Open edit package modal
+    function openEditPackageModal(packageId) {
+        const package = data.packages.find(p => p.id === packageId);
+        if (!package) return;
+        
+        document.getElementById('edit-package-id').value = package.id;
+        document.getElementById('edit-package-name').value = package.name || '';
+        document.getElementById('edit-package-duration').value = package.duration || '';
+        document.getElementById('edit-package-price').value = package.price || '';
+        document.getElementById('edit-package-description').value = package.description || '';
+        document.getElementById('edit-package-image').value = package.image_url || '';
+        
+        // Set selected destination
+        const destinationDropdown = document.getElementById('edit-package-destination');
+        for (let i = 0; i < destinationDropdown.options.length; i++) {
+            if (parseInt(destinationDropdown.options[i].value) === package.destination_id) {
+                destinationDropdown.selectedIndex = i;
+                break;
+            }
+        }
+        
+        document.getElementById('edit-package-modal').style.display = 'block';
+    }
+    
+    // Open edit booking modal
+    function openEditBookingModal(bookingId) {
+        const booking = data.bookings.find(b => b.id === bookingId);
+        if (!booking) return;
+        
+        document.getElementById('edit-booking-id').value = booking.id;
+        document.getElementById('edit-booking-name').value = booking.name || '';
+        document.getElementById('edit-booking-email').value = booking.email || '';
+        document.getElementById('edit-booking-travel-date').value = booking.travel_date || '';
+        document.getElementById('edit-booking-guests').value = booking.guests || '';
+        
+        // Set selected package
+        const packageDropdown = document.getElementById('edit-booking-package');
+        for (let i = 0; i < packageDropdown.options.length; i++) {
+            if (parseInt(packageDropdown.options[i].value) === booking.package_id) {
+                packageDropdown.selectedIndex = i;
+                break;
+            }
+        }
+        
+        document.getElementById('edit-booking-modal').style.display = 'block';
+    }
+    
+    // Add new destination
+    async function addDestination(event) {
+        event.preventDefault();
+        
+        const newDestination = {
+            name: document.getElementById('new-dest-name').value,
+            country: document.getElementById('new-dest-country').value,
+            description: document.getElementById('new-dest-description').value,
+            image_url: document.getElementById('new-dest-image').value
+        };
+        
+        try {
+            const response = await fetch('/api/destinations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newDestination)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add new destination to the data array
+            data.destinations.push(result);
+            
+            // Update UI
+            updateDestinationsTable();
+            populateDestinationDropdowns();
+            
+            // Clear form
+            document.getElementById('add-destination-form').reset();
+            
+            showError('Destination added successfully!');
+        } catch (error) {
+            console.error('Error adding destination:', error);
+            showError('Failed to add destination. Please try again.');
+        }
+    }
+    
+    // Update destination
+    async function updateDestination(event) {
+        event.preventDefault();
+        
+        const destinationId = parseInt(document.getElementById('edit-dest-id').value);
+        
+        const updatedDestination = {
+            name: document.getElementById('edit-dest-name').value,
+            country: document.getElementById('edit-dest-country').value,
+            description: document.getElementById('edit-dest-description').value,
+            image_url: document.getElementById('edit-dest-image').value
+        };
+        
+        try {
+            const response = await fetch(`/api/destinations/${destinationId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedDestination)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Update destination in the data array
+            const index = data.destinations.findIndex(d => d.id === destinationId);
+            if (index !== -1) {
+                data.destinations[index] = result;
+            }
+            
+            // Update UI
+            updateDestinationsTable();
+            populateDestinationDropdowns();
+            
+            // Close modal
+            document.getElementById('edit-destination-modal').style.display = 'none';
+            
+            showError('Destination updated successfully!');
+        } catch (error) {
+            console.error('Error updating destination:', error);
+            showError('Failed to update destination. Please try again.');
+        }
+    }
+    
+    // Delete destination
+    async function deleteDestination(destinationId) {
+        if (!confirm('Are you sure you want to delete this destination? All associated packages will also be deleted.')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/destinations/${destinationId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Remove destination from the data array
+            data.destinations = data.destinations.filter(d => d.id !== destinationId);
+            
+            // Remove associated packages
+            data.packages = data.packages.filter(p => p.destination_id !== destinationId);
+            
+            // Update UI
+            updateDestinationsTable();
+            updatePackagesTable();
+            populateDestinationDropdowns();
+            
+            showError('Destination deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting destination:', error);
+            showError('Failed to delete destination. Please try again.');
+        }
+    }
+    
+    // Add new package
+    async function addPackage(event) {
+        event.preventDefault();
+        
+        const newPackage = {
+            name: document.getElementById('new-package-name').value,
+            destination_id: parseInt(document.getElementById('new-package-destination').value),
+            duration: parseInt(document.getElementById('new-package-duration').value),
+            price: parseFloat(document.getElementById('new-package-price').value),
+            description: document.getElementById('new-package-description').value,
+            image_url: document.getElementById('new-package-image').value
+        };
+        
+        try {
+            const response = await fetch('/api/packages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newPackage)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add new package to the data array
+            data.packages.push(result);
+            
+            // Update UI
+            updatePackagesTable();
+            updateDestinationsTable(); // To update package counts
+            
+            // Clear form
+            document.getElementById('add-package-form').reset();
+            
+            showError('Package added successfully!');
+        } catch (error) {
+            console.error('Error adding package:', error);
+            showError('Failed to add package. Please try again.');
+        }
+    }
+    
+    // Update package
+    async function updatePackage(event) {
+        event.preventDefault();
+        
+        const packageId = parseInt(document.getElementById('edit-package-id').value);
+        
+        const updatedPackage = {
+            name: document.getElementById('edit-package-name').value,
+            destination_id: parseInt(document.getElementById('edit-package-destination').value),
+            duration: parseInt(document.getElementById('edit-package-duration').value),
+            price: parseFloat(document.getElementById('edit-package-price').value),
+            description: document.getElementById('edit-package-description').value,
+            image_url: document.getElementById('edit-package-image').value
+        };
+        
+        try {
+            const response = await fetch(`/api/packages/${packageId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedPackage)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Update package in the data array
+            const index = data.packages.findIndex(p => p.id === packageId);
+            if (index !== -1) {
+                data.packages[index] = result;
+            }
+            
+            // Update UI
+            updatePackagesTable();
+            
+            // Close modal
+            document.getElementById('edit-package-modal').style.display = 'none';
+            
+            showError('Package updated successfully!');
+        } catch (error) {
+            console.error('Error updating package:', error);
+            showError('Failed to update package. Please try again.');
+        }
+    }
+    
+    // Delete package
+    async function deletePackage(packageId) {
+        if (!confirm('Are you sure you want to delete this package?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/packages/${packageId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Remove package from the data array
+            data.packages = data.packages.filter(p => p.id !== packageId);
+            
+            // Update UI
+            updatePackagesTable();
+            updateDestinationsTable(); // To update package counts
+            
+            showError('Package deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting package:', error);
+            showError('Failed to delete package. Please try again.');
+        }
+    }
+    
+    // Add new booking
+    async function addBooking(event) {
+        event.preventDefault();
+        
+        const newBooking = {
+            name: document.getElementById('new-booking-name').value,
+            email: document.getElementById('new-booking-email').value,
+            package_id: parseInt(document.getElementById('new-booking-package').value),
+            travel_date: document.getElementById('new-booking-travel-date').value,
+            guests: parseInt(document.getElementById('new-booking-guests').value)
+        };
+        
+        try {
+            const response = await fetch('/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newBooking)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add package and destination info
+            const package = data.packages.find(p => p.id === result.package_id);
+            const destination = package ? 
+                data.destinations.find(d => d.id === package.destination_id) : null;
+            
+            const completeBooking = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown'
+            };
+            
+            // Add new booking to the data array
+            data.bookings.push(completeBooking);
+            
+            // Update UI
+            updateAllBookingsTable();
+            updateRecentBookingsTable();
+            updateStats();
+            
+            // Clear form and close modal
+            document.getElementById('add-booking-form').reset();
+            document.getElementById('add-booking-modal').style.display = 'none';
+            
+            showError('Booking added successfully!');
+        } catch (error) {
+            console.error('Error adding booking:', error);
+            showError('Failed to add booking. Please try again.');
+        }
+    }
+    
+    // Update booking
+    async function updateBooking(event) {
+        event.preventDefault();
+        
+        const bookingId = parseInt(document.getElementById('edit-booking-id').value);
+        
+        const updatedBooking = {
+            name: document.getElementById('edit-booking-name').value,
+            email: document.getElementById('edit-booking-email').value,
+            package_id: parseInt(document.getElementById('edit-booking-package').value),
+            travel_date: document.getElementById('edit-booking-travel-date').value,
+            guests: parseInt(document.getElementById('edit-booking-guests').value)
+        };
+        
+        try {
+            const response = await fetch(`/api/bookings/${bookingId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedBooking)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add package and destination info
+            const package = data.packages.find(p => p.id === result.package_id);
+            const destination = package ? 
+                data.destinations.find(d => d.id === package.destination_id) : null;
+            
+            const completeBooking = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown'
+            };
+            
+            // Update booking in the data array
+            const index = data.bookings.findIndex(b => b.id === bookingId);
+            if (index !== -1) {
+                data.bookings[index] = completeBooking;
+            }
+            
+            // Update UI
+            updateAllBookingsTable();
+            updateRecentBookingsTable();
+            
+            // Close modal
+            document.getElementById('edit-booking-modal').style.display = 'none';
+            
+            showError('Booking updated successfully!');
+        } catch (error) {
+            console.error('Error updating booking:', error);
+            showError('Failed to update booking. Please try again.');
+        }
+    }
+    
+    // Delete booking
+    async function deleteBooking(bookingId) {
+        if (!confirm('Are you sure you want to delete this booking?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/bookings/${bookingId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Remove booking from the data array
+            data.bookings = data.bookings.filter(b => b.id !== bookingId);
+            
+            // Update UI
+            updateAllBookingsTable();
+            updateRecentBookingsTable();
+            updateStats();
+            
+            showError('Booking deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting booking:', error);
+            showError('Failed to delete booking. Please try again.');
+        }
+    }
+    
+    // Add new review
+    async function addReview(event) {
+        event.preventDefault();
+        
+        const newReview = {
+            name: document.getElementById('new-review-name').value,
+            email: document.getElementById('new-review-email').value,
+            destination_id: parseInt(document.getElementById('new-review-destination').value),
+            rating: parseInt(document.getElementById('new-review-rating').value),
+            comment: document.getElementById('new-review-comment').value
+        };
+        
+        try {
+            const response = await fetch('/api/reviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newReview)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add destination info
+            const destination = data.destinations.find(d => d.id === result.destination_id);
+            
+            const completeReview = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown'
+            };
+            
+            // Add new review to the data array
+            data.reviews.push(completeReview);
+            
+            // Update UI
+            updateAllReviewsTable();
+            updateRecentReviewsTable();
+            updateDestinationsTable(); // To update average ratings
+            updateStats();
+            
+            // Clear form and close modal
+            document.getElementById('add-review-form').reset();
+            document.getElementById('add-review-modal').style.display = 'none';
+            
+            showError('Review added successfully!');
+        } catch (error) {
+            console.error('Error adding review:', error);
+            showError('Failed to add review. Please try again.');
+        }
+    }
+    
+    // Update review
+    async function updateReview(event) {
+        event.preventDefault();
+        
+        const reviewId = parseInt(document.getElementById('edit-review-id').value);
+        
+        const updatedReview = {
+            name: document.getElementById('edit-review-name').value,
+            email: document.getElementById('edit-review-email').value,
+            destination_id: parseInt(document.getElementById('edit-review-destination').value),
+            rating: parseInt(document.getElementById('edit-review-rating').value),
+            comment: document.getElementById('edit-review-comment').value
+        };
+        
+        try {
+            const response = await fetch(`/api/reviews/${reviewId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedReview)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add destination info
+            const destination = data.destinations.find(d => d.id === result.destination_id);
+            
+            const completeReview = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown',
+                review_date: data.reviews.find(r => r.id === reviewId).review_date // Keep the original date
+            };
+            
+            // Update review in the data array
+            const index = data.reviews.findIndex(r => r.id === reviewId);
+            if (index !== -1) {
+                data.reviews[index] = completeReview;
+            }
+            
+            // Update UI
+            updateAllReviewsTable();
+            updateRecentReviewsTable();
+            updateDestinationsTable(); // To update average ratings
+            updateStats();
+            
+            // Close modal
+            document.getElementById('edit-review-modal').style.display = 'none';
+            
+            showError('Review updated successfully!');
+        } catch (error) {
+            console.error('Error updating review:', error);
+            showError('Failed to update review. Please try again.');
+        }
+    }
+    
+    // Delete review
+    async function deleteReview(reviewId) {
+        if (!confirm('Are you sure you want to delete this review?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/reviews/${reviewId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Remove review from the data array
+            data.reviews = data.reviews.filter(r => r.id !== reviewId);
+            
+            // Update UI
+            updateAllReviewsTable();
+            updateRecentReviewsTable();
+            updateDestinationsTable(); // To update average ratings
+            updateStats();
+            
+            showError('Review deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting review:', error);
+            showError('Failed to delete review. Please try again.');
+        }
+    }
+    
+    // Tab navigation
+    document.querySelectorAll('.tab-link').forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get the tab to show
+            const tabId = this.getAttribute('data-tab');
+            
+            // Update active tab link
+            document.querySelectorAll('.tab-link').forEach(t => {
+                t.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Show the tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+    
+    // Format date
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+    
+    // Format currency
+    function formatCurrency(value) {
+        return '$' + parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+    
+    // Generate star rating HTML
+    function generateStars(rating) {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= rating) {
+                starsHtml += '★'; // Full star
+            } else {
+                starsHtml += '☆'; // Empty star
+            }
+        }
+        return starsHtml;
+    }
+    
+    // Booking search functionality
+    document.getElementById('booking-search-btn').addEventListener('click', function() {
+        const searchEmail = document.getElementById('booking-search').value.toLowerCase().trim();
+        const tableBody = document.getElementById('all-bookings-table').querySelector('tbody');
+        
+        if (!searchEmail) {
+            // Reset to show all bookings
+            updateAllBookingsTable();
+            return;
+        }
+        
+        // Filter bookings by email
+        const filteredBookings = data.bookings.filter(booking => 
+            booking.email.toLowerCase().includes(searchEmail)
+        );
+        
+        if (filteredBookings.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="9">No bookings found for email: ${searchEmail}</td></tr>`;
+            return;
+        }
+        
+        tableBody.innerHTML = '';
+        
+        filteredBookings.forEach(booking => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${booking.id}</td>
+                <td>${booking.name}</td>
+                <td>${booking.email}</td>
+                <td>${booking.destination_name}</td>
+                <td>${formatDate(booking.travel_date)}</td>
+                <td>${booking.guests}</td>
+                <td>${formatCurrency(booking.total_price)}</td>
+                <td>${formatDate(booking.booking_date)}</td>
+                <td>
+                    <button class="btn btn-sm edit-booking" data-id="${booking.id}">Edit</button>
+                    <button class="btn btn-sm" style="background-color: var(--danger);" onclick="deleteBooking(${booking.id})">Delete</button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    });
+    
+    // Set up event listeners
+    function setupEventListeners() {
+        // Form submissions
+        document.getElementById('add-destination-form').addEventListener('submit', addDestination);
+        document.getElementById('edit-destination-form').addEventListener('submit', updateDestination);
+        document.getElementById('add-package-form').addEventListener('submit', addPackage);
+        document.getElementById('edit-package-form').addEventListener('submit', updatePackage);
+        document.getElementById('add-booking-form').addEventListener('submit', addBooking);
+        document.getElementById('edit-booking-form').addEventListener('submit', updateBooking);
+        document.getElementById('add-review-form').addEventListener('submit', addReview);
+        document.getElementById('edit-review-form').addEventListener('submit', updateReview);
+        
+        // Add new buttons
+        document.getElementById('add-new-booking-btn').addEventListener('click', openAddBookingModal);
+        document.getElementById('add-new-review-btn').addEventListener('click', openAddReviewModal);
+        
+        // Modal close buttons
+        document.getElementById('close-edit-dest-modal').addEventListener('click', () => {
+            document.getElementById('edit-destination-modal').style.display = 'none';
+        });
+        
+        document.getElementById('close-edit-package-modal').addEventListener('click', () => {
+            document.getElementById('edit-package-modal').style.display = 'none';
+        });
+        
+        document.getElementById('close-add-booking-modal').addEventListener('click', () => {
+            document.getElementById('add-booking-modal').style.display = 'none';
+        });
+        
+        document.getElementById('close-edit-booking-modal').addEventListener('click', () => {
+            document.getElementById('edit-booking-modal').style.display = 'none';
+        });
+        
+        document.getElementById('close-add-review-modal').addEventListener('click', () => {
+            document.getElementById('add-review-modal').style.display = 'none';
+        });
+        
+        document.getElementById('close-edit-review-modal').addEventListener('click', () => {
+            document.getElementById('edit-review-modal').style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.id === 'edit-destination-modal') {
+                document.getElementById('edit-destination-modal').style.display = 'none';
+            }
+            if (e.target.id === 'edit-package-modal') {
+                document.getElementById('edit-package-modal').style.display = 'none';
+            }
+            if (e.target.id === 'add-booking-modal') {
+                document.getElementById('add-booking-modal').style.display = 'none';
+            }
+            if (e.target.id === 'edit-booking-modal') {
+                document.getElementById('edit-booking-modal').style.display = 'none';
+            }
+            if (e.target.id === 'add-review-modal') {
+                document.getElementById('add-review-modal').style.display = 'none';
+            }
+            if (e.target.id === 'edit-review-modal') {
+                document.getElementById('edit-review-modal').style.display = 'none';
+            }
+        });
+    }
+    
+    // Load data when page loads
+    document.addEventListener('DOMContentLoaded', initDashboard);
+    
+    // Update all bookings table
+    function updateAllBookingsTable() {
+        const tableBody = document.getElementById('all-bookings-table').querySelector('tbody');
+        
+        if (data.bookings.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="9">No bookings found</td></tr>';
+            return;
+        }
+        
+        // Sort bookings by date (newest first)
+        const sortedBookings = [...data.bookings]
+            .sort((a, b) => new Date(b.booking_date) - new Date(a.booking_date));
+        
+        tableBody.innerHTML = '';
+        
+        sortedBookings.forEach(booking => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${booking.id}</td>
+                <td>${booking.name}</td>
+                <td>${booking.email}</td>
+                <td>${booking.destination_name}</td>
+                <td>${formatDate(booking.travel_date)}</td>
+                <td>${booking.guests}</td>
+                <td>${formatCurrency(booking.total_price)}</td>
+                <td>${formatDate(booking.booking_date)}</td>
+                <td>
+                    <button class="btn btn-sm edit-booking" data-id="${booking.id}">Edit</button>
+                    <button class="btn btn-sm" style="background-color: var(--danger);" onclick="deleteBooking(${booking.id})">Delete</button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        // Add event listeners to edit buttons
+        document.querySelectorAll('.edit-booking').forEach(button => {
+            button.addEventListener('click', function() {
+                const bookingId = parseInt(this.getAttribute('data-id'));
+                openEditBookingModal(bookingId);
+            });
+        });
+    }
+
+    // Update all reviews table
+    function updateAllReviewsTable() {
+        const tableBody = document.getElementById('all-reviews-table').querySelector('tbody');
+        
+        if (data.reviews.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="7">No reviews found</td></tr>';
+            return;
+        }
+        
+        // Sort reviews by date (newest first)
+        const sortedReviews = [...data.reviews]
+            .sort((a, b) => new Date(b.review_date) - new Date(a.review_date));
+        
+        tableBody.innerHTML = '';
+        
+        sortedReviews.forEach(review => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${review.id}</td>
+                <td>${review.name}</td>
+                <td>${review.destination_name}</td>
+                <td>${generateStars(review.rating)}</td>
+                <td>${review.comment}</td>
+                <td>${formatDate(review.review_date)}</td>
+                <td>
+                    <button class="btn btn-sm edit-review" data-id="${review.id}">Edit</button>
+                    <button class="btn btn-sm" style="background-color: var(--danger);" onclick="deleteReview(${review.id})">Delete</button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        // Add event listeners to edit buttons
+        document.querySelectorAll('.edit-review').forEach(button => {
+            button.addEventListener('click', function() {
+                const reviewId = parseInt(this.getAttribute('data-id'));
+                openEditReviewModal(reviewId);
+            });
+        });
+    }
+
+    // Populate package dropdown in booking forms
+    function populatePackageDropdowns() {
+        const newBookingPackage = document.getElementById('new-booking-package');
+        const editBookingPackage = document.getElementById('edit-booking-package');
+        
+        // Clear existing options
+        newBookingPackage.innerHTML = '<option value="">Select Package</option>';
+        editBookingPackage.innerHTML = '<option value="">Select Package</option>';
+        
+        // Add options for each package grouped by destination
+        const destinations = {};
+        
+        // Group packages by destination
+        data.packages.forEach(package => {
+            const destination = data.destinations.find(d => d.id === package.destination_id);
+            const destinationName = destination ? destination.name : 'Unknown';
+            
+            if (!destinations[destinationName]) {
+                destinations[destinationName] = [];
+            }
+            
+            destinations[destinationName].push(package);
+        });
+        
+        // Add options to dropdowns
+        Object.keys(destinations).sort().forEach(destinationName => {
+            const newOptgroup = document.createElement('optgroup');
+            newOptgroup.label = destinationName;
+            
+            const editOptgroup = document.createElement('optgroup');
+            editOptgroup.label = destinationName;
+            
+            destinations[destinationName].forEach(package => {
+                const newOption = document.createElement('option');
+                newOption.value = package.id;
+                newOption.textContent = `${package.name} - ${package.duration} days - ${formatCurrency(package.price)}`;
+                
+                const editOption = document.createElement('option');
+                editOption.value = package.id;
+                editOption.textContent = `${package.name} - ${package.duration} days - ${formatCurrency(package.price)}`;
+                
+                newOptgroup.appendChild(newOption);
+                editOptgroup.appendChild(editOption);
+            });
+            
+            newBookingPackage.appendChild(newOptgroup);
+            editBookingPackage.appendChild(editOptgroup);
+        });
+    }
+
+    // Populate destination dropdowns in review forms
+    function populateReviewDestinationDropdowns() {
+        const newReviewDestination = document.getElementById('new-review-destination');
+        const editReviewDestination = document.getElementById('edit-review-destination');
+        
+        // Clear existing options
+        newReviewDestination.innerHTML = '<option value="">Select Destination</option>';
+        editReviewDestination.innerHTML = '<option value="">Select Destination</option>';
+        
+        // Add options for each destination
+        data.destinations.sort((a, b) => a.name.localeCompare(b.name)).forEach(destination => {
+            const newOption = document.createElement('option');
+            newOption.value = destination.id;
+            newOption.textContent = destination.name;
+            
+            const editOption = document.createElement('option');
+            editOption.value = destination.id;
+            editOption.textContent = destination.name;
+            
+            newReviewDestination.appendChild(newOption);
+            editReviewDestination.appendChild(editOption);
+        });
+    }
+
+    // Open add booking modal
+    function openAddBookingModal() {
+        // Set minimum date to today
+        const today = new Date();
+        const dateInput = document.getElementById('new-booking-travel-date');
+        dateInput.min = today.toISOString().split('T')[0];
+        
+        // Show modal
+        document.getElementById('add-booking-modal').style.display = 'block';
+    }
+
+    // Open edit booking modal
+    function openEditBookingModal(bookingId) {
+        const booking = data.bookings.find(b => b.id === bookingId);
+        if (!booking) return;
+        
+        document.getElementById('edit-booking-id').value = booking.id;
+        document.getElementById('edit-booking-name').value = booking.name || '';
+        document.getElementById('edit-booking-email').value = booking.email || '';
+        
+        // Format date for input field (YYYY-MM-DD)
+        const travelDate = new Date(booking.travel_date);
+        const formattedDate = travelDate.toISOString().split('T')[0];
+        document.getElementById('edit-booking-travel-date').value = formattedDate;
+        
+        document.getElementById('edit-booking-guests').value = booking.guests || 1;
+        
+        // Set selected package
+        const packageDropdown = document.getElementById('edit-booking-package');
+        for (let i = 0; i < packageDropdown.options.length; i++) {
+            if (parseInt(packageDropdown.options[i].value) === booking.package_id) {
+                packageDropdown.selectedIndex = i;
+                break;
+            }
+        }
+        
+        document.getElementById('edit-booking-modal').style.display = 'block';
+    }
+
+    // Open add review modal
+    function openAddReviewModal() {
+        document.getElementById('add-review-modal').style.display = 'block';
+    }
+
+    // Open edit review modal
+    function openEditReviewModal(reviewId) {
+        const review = data.reviews.find(r => r.id === reviewId);
+        if (!review) return;
+        
+        document.getElementById('edit-review-id').value = review.id;
+        document.getElementById('edit-review-name').value = review.name || '';
+        document.getElementById('edit-review-email').value = review.email || '';
+        document.getElementById('edit-review-comment').value = review.comment || '';
+        
+        // Set selected destination
+        const destinationDropdown = document.getElementById('edit-review-destination');
+        for (let i = 0; i < destinationDropdown.options.length; i++) {
+            if (parseInt(destinationDropdown.options[i].value) === review.destination_id) {
+                destinationDropdown.selectedIndex = i;
+                break;
+            }
+        }
+        
+        // Set selected rating
+        const ratingDropdown = document.getElementById('edit-review-rating');
+        for (let i = 0; i < ratingDropdown.options.length; i++) {
+            if (parseInt(ratingDropdown.options[i].value) === review.rating) {
+                ratingDropdown.selectedIndex = i;
+                break;
+            }
+        }
+        
+        document.getElementById('edit-review-modal').style.display = 'block';
+    }
+
+    // Add new booking
+    async function addBooking(event) {
+        event.preventDefault();
+        
+        const newBooking = {
+            name: document.getElementById('new-booking-name').value,
+            email: document.getElementById('new-booking-email').value,
+            package_id: parseInt(document.getElementById('new-booking-package').value),
+            travel_date: document.getElementById('new-booking-travel-date').value,
+            guests: parseInt(document.getElementById('new-booking-guests').value)
+        };
+        
+        try {
+            const response = await fetch('/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newBooking)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add package and destination info
+            const package = data.packages.find(p => p.id === result.package_id);
+            const destination = package ? 
+                data.destinations.find(d => d.id === package.destination_id) : null;
+            
+            const completeBooking = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown'
+            };
+            
+            // Add new booking to the data array
+            data.bookings.push(completeBooking);
+            
+            // Update UI
+            updateAllBookingsTable();
+            updateRecentBookingsTable();
+            updateStats();
+            
+            // Clear form and close modal
+            document.getElementById('add-booking-form').reset();
+            document.getElementById('add-booking-modal').style.display = 'none';
+            
+            showError('Booking added successfully!');
+        } catch (error) {
+            console.error('Error adding booking:', error);
+            showError('Failed to add booking. Please try again.');
+        }
+    }
+
+    // Update booking
+    async function updateBooking(event) {
+        event.preventDefault();
+        
+        const bookingId = parseInt(document.getElementById('edit-booking-id').value);
+        
+        const updatedBooking = {
+            name: document.getElementById('edit-booking-name').value,
+            email: document.getElementById('edit-booking-email').value,
+            package_id: parseInt(document.getElementById('edit-booking-package').value),
+            travel_date: document.getElementById('edit-booking-travel-date').value,
+            guests: parseInt(document.getElementById('edit-booking-guests').value)
+        };
+        
+        try {
+            const response = await fetch(`/api/bookings/${bookingId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedBooking)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add package and destination info
+            const package = data.packages.find(p => p.id === result.package_id);
+            const destination = package ? 
+                data.destinations.find(d => d.id === package.destination_id) : null;
+            
+            const completeBooking = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown'
+            };
+            
+            // Update booking in the data array
+            const index = data.bookings.findIndex(b => b.id === bookingId);
+            if (index !== -1) {
+                data.bookings[index] = completeBooking;
+            }
+            
+            // Update UI
+            updateAllBookingsTable();
+            updateRecentBookingsTable();
+            
+            // Close modal
+            document.getElementById('edit-booking-modal').style.display = 'none';
+            
+            showError('Booking updated successfully!');
+        } catch (error) {
+            console.error('Error updating booking:', error);
+            showError('Failed to update booking. Please try again.');
+        }
+    }
+
+    // Delete booking
+    async function deleteBooking(bookingId) {
+        if (!confirm('Are you sure you want to delete this booking?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/bookings/${bookingId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Remove booking from the data array
+            data.bookings = data.bookings.filter(b => b.id !== bookingId);
+            
+            // Update UI
+            updateAllBookingsTable();
+            updateRecentBookingsTable();
+            updateStats();
+            
+            showError('Booking deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting booking:', error);
+            showError('Failed to delete booking. Please try again.');
+        }
+    }
+
+    // Add new review
+    async function addReview(event) {
+        event.preventDefault();
+        
+        const newReview = {
+            name: document.getElementById('new-review-name').value,
+            email: document.getElementById('new-review-email').value,
+            destination_id: parseInt(document.getElementById('new-review-destination').value),
+            rating: parseInt(document.getElementById('new-review-rating').value),
+            comment: document.getElementById('new-review-comment').value
+        };
+        
+        try {
+            const response = await fetch('/api/reviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newReview)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add destination info
+            const destination = data.destinations.find(d => d.id === result.destination_id);
+            
+            const completeReview = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown'
+            };
+            
+            // Add new review to the data array
+            data.reviews.push(completeReview);
+            
+            // Update UI
+            updateAllReviewsTable();
+            updateRecentReviewsTable();
+            updateDestinationsTable(); // To update average ratings
+            updateStats();
+            
+            // Clear form and close modal
+            document.getElementById('add-review-form').reset();
+            document.getElementById('add-review-modal').style.display = 'none';
+            
+            showError('Review added successfully!');
+        } catch (error) {
+            console.error('Error adding review:', error);
+            showError('Failed to add review. Please try again.');
+        }
+    }
+
+    // Update review
+    async function updateReview(event) {
+        event.preventDefault();
+        
+        const reviewId = parseInt(document.getElementById('edit-review-id').value);
+        
+        const updatedReview = {
+            name: document.getElementById('edit-review-name').value,
+            email: document.getElementById('edit-review-email').value,
+            destination_id: parseInt(document.getElementById('edit-review-destination').value),
+            rating: parseInt(document.getElementById('edit-review-rating').value),
+            comment: document.getElementById('edit-review-comment').value
+        };
+        
+        try {
+            const response = await fetch(`/api/reviews/${reviewId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedReview)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            // Add destination info
+            const destination = data.destinations.find(d => d.id === result.destination_id);
+            
+            const completeReview = {
+                ...result,
+                destination_name: destination ? destination.name : 'Unknown',
+                review_date: data.reviews.find(r => r.id === reviewId).review_date // Keep the original date
+            };
+            
+            // Update review in the data array
+            const index = data.reviews.findIndex(r => r.id === reviewId);
+            if (index !== -1) {
+                data.reviews[index] = completeReview;
+            }
+            
+            // Update UI
+            updateAllReviewsTable();
+            updateRecentReviewsTable();
+            updateDestinationsTable(); // To update average ratings
+            updateStats();
+            
+            // Close modal
+            document.getElementById('edit-review-modal').style.display = 'none';
+            
+            showError('Review updated successfully!');
+        } catch (error) {
+            console.error('Error updating review:', error);
+            showError('Failed to update review. Please try again.');
+        }
+    }
+
+    // Delete review
+    async function deleteReview(reviewId) {
+        if (!confirm('Are you sure you want to delete this review?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/reviews/${reviewId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Remove review from the data array
+            data.reviews = data.reviews.filter(r => r.id !== reviewId);
+            
+            // Update UI
+            updateAllReviewsTable();
+            updateRecentReviewsTable();
+            updateDestinationsTable(); // To update average ratings
+            updateStats();
+            
+            showError('Review deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting review:', error);
+            showError('Failed to delete review. Please try again.');
+        }
+    }
+    </script>
+</body>
+</html>
